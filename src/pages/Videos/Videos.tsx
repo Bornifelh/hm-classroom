@@ -1,13 +1,15 @@
 import { IonContent, IonPage } from "@ionic/react";
 import React from "react";
+import Header from "../Header/Header";
 
 const Videos : React.FC = () =>{
     return(
         <IonPage>
-            <IonContent fullscreen>
-
+            <Header/>
+            <IonContent>
+                <h1>Videos</h1>
             </IonContent>
         </IonPage>
     )
 }
-export default Videos
+export default Videos;

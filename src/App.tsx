@@ -55,28 +55,13 @@ import Compte from './pages/Compte/Compte';
 import Notifications from './pages/Notifications/Notifications';
 import Cours from './pages/Cours/Cours';
 import Videos from './pages/Videos/Videos';
+import Header from './pages/Header/Header';
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <IonHeader>
-      <IonToolbar>
-        <IonTitle>
-          <IonRow>
-              <IonCol size=''><IonTitle>HM Classroom</IonTitle></IonCol>
-              <IonCol size='auto'>
-                <IonButton><IonIcon src={cart}></IonIcon></IonButton>
-              </IonCol>
-              <IonCol size='auto'>
-                <IonButton routerLink='/Notifications'>
-                  <IonIcon src={notifications}></IonIcon>
-                </IonButton>
-              </IonCol>
-          </IonRow>
-        </IonTitle>
-      </IonToolbar>
-    </IonHeader>
+   {/* <Header/> */}
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
@@ -115,6 +100,10 @@ const App: React.FC = () => (
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
+
+      <Route exact path="/Notifications">
+            <Notifications />
+          </Route>
     </IonReactRouter>
   </IonApp>
 );
