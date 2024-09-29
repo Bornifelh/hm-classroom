@@ -1,10 +1,10 @@
 import React from "react";
 
-const Order : React.FC = () =>{
+const OrderComponment : React.FC = () =>{
     return(
         <div>
 
         </div>
     )
 }
-export default Order;
+export default OrderComponment;
