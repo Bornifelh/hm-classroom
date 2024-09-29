@@ -9,7 +9,6 @@ const Accueil : React.FC = () => {
         <IonPage>
             <Header/>
             <IonContent className="ion-padding" fullscreen>
-                <IonTitle>Accueil</IonTitle>
                 <AccueilComponment/>
             </IonContent>
         </IonPage>
