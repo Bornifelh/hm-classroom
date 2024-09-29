@@ -1,15 +1,13 @@
 import { IonContent, IonPage } from "@ionic/react";
 import React from "react";
-import AccueilComponment from "./AccueilComponment";
 
-
-const Accueil : React.FC = () => {
+const Videos : React.FC = () =>{
     return(
         <IonPage>
             <IonContent fullscreen>
-                <h1>Accueil</h1>
+
             </IonContent>
         </IonPage>
     )
 }
-export default Accueil;
+export default Videos

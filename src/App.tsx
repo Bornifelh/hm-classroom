@@ -16,7 +16,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { cart, ellipse, film, home, notifications, person, settings, square, triangle } from 'ionicons/icons';
+import { cart, ellipse, film, home, library, notifications, person, settings, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -53,6 +53,8 @@ import './theme/variables.css';
 import Accueil from './pages/Accueil/Accueil';
 import Compte from './pages/Compte/Compte';
 import Notifications from './pages/Notifications/Notifications';
+import Cours from './pages/Cours/Cours';
+import Videos from './pages/Videos/Videos';
 
 setupIonicReact();
 
@@ -67,7 +69,7 @@ const App: React.FC = () => (
                 <IonButton><IonIcon src={cart}></IonIcon></IonButton>
               </IonCol>
               <IonCol size='auto'>
-                <IonButton routerLink='./Notifications'>
+                <IonButton routerLink='/Notifications'>
                   <IonIcon src={notifications}></IonIcon>
                 </IonButton>
               </IonCol>
@@ -81,11 +83,11 @@ const App: React.FC = () => (
           <Route exact path="/Accueil">
             <Accueil />
           </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
+          <Route exact path="/Cours">
+            <Cours />
           </Route>
-          <Route exact path="/Notifications">
-            <Notifications />
+          <Route exact path="/Videos">
+            <Videos />
           </Route>
           <Route path="/Compte">
             <Compte />
@@ -99,11 +101,11 @@ const App: React.FC = () => (
             <IonIcon aria-hidden="true" icon={home} />
             <IonLabel>Accueil</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon aria-hidden="true" icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel>
+          <IonTabButton tab="Cours" href="/Cours">
+            <IonIcon aria-hidden="true" icon={library} />
+            <IonLabel>Mes cours</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="Notifications" href="/Notifications">
+          <IonTabButton tab="Vidéos" href="/Videos">
             <IonIcon aria-hidden="true" icon={film} />
             <IonLabel>Vidéos</IonLabel>
           </IonTabButton>
