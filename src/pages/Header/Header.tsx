@@ -21,7 +21,7 @@ const Header : React.FC = () =>{
     // </IonHeader>
 
     <IonFab  slot="fixed" vertical="top" horizontal="end">
-      <IonFabButton>
+      <IonFabButton routerLink="./Notifications">
       <IonIcon src={notifications}></IonIcon><IonLabel>2</IonLabel>
       </IonFabButton>
 
