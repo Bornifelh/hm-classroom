@@ -9,10 +9,7 @@ const Header : React.FC = () =>{
       <IonToolbar>
         <IonTitle>
           <IonRow>
-              <IonCol size=''><IonTitle>HM Classroom</IonTitle></IonCol>
-              <IonCol size='auto'>
-                <IonButton><IonIcon src={cart}></IonIcon></IonButton>
-              </IonCol>
+              <IonCol size=''><IonTitle>HM CLASSROOM</IonTitle></IonCol>
               <IonCol size='auto'>
                 <IonButton routerLink='./Notifications'>
                   <IonIcon src={notifications}></IonIcon>
