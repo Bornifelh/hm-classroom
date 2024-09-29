@@ -1,6 +1,7 @@
-import { IonButton, IonCol, IonHeader, IonIcon, IonPage, IonRow, IonTitle, IonToolbar } from "@ionic/react";
+import { IonButton, IonCol, IonHeader, IonIcon, IonNavLink, IonPage, IonRow, IonTitle, IonToolbar } from "@ionic/react";
 import { cart, notifications } from "ionicons/icons";
 import React from "react";
+import Notifications from "../Notifications/Notifications";
 
 const Header : React.FC = () =>{
     return(
