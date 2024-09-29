@@ -6,3 +6,8 @@ ion-card-content img{
     padding: 0;
     margin: 0;
 }
+
+.content-formation-accueil{
+    display: flex;
+    flex-wrap: wrap;
+}
