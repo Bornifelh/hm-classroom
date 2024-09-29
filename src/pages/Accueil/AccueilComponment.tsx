@@ -1,12 +1,12 @@
-import { IonIcon, IonPage } from "@ionic/react";
+import { IonContent, IonIcon, IonPage } from "@ionic/react";
 import React from "react";
 
 
 const AccueilComponment : React.FC = () => {
     return(
-        <div>
+        <IonContent>
             <p>Accueil</p>
-        </div>
+        </IonContent>
     )
 }
 export default AccueilComponment;

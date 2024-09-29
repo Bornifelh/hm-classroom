@@ -1,16 +1,22 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
+  IonButton,
+  IonCol,
+  IonHeader,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
+  IonRow,
   IonTabBar,
   IonTabButton,
   IonTabs,
+  IonTitle,
+  IonToolbar,
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, home, notifications, person, settings, square, triangle } from 'ionicons/icons';
+import { cart, ellipse, film, home, notifications, person, settings, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -52,6 +58,23 @@ setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
+    <IonHeader>
+      <IonToolbar>
+        <IonTitle>
+          <IonRow>
+              <IonCol size=''><IonTitle>HM Classroom</IonTitle></IonCol>
+              <IonCol size='auto'>
+                <IonButton><IonIcon src={cart}></IonIcon></IonButton>
+              </IonCol>
+              <IonCol size='auto'>
+                <IonButton routerLink='./Notifications'>
+                  <IonIcon src={notifications}></IonIcon>
+                </IonButton>
+              </IonCol>
+          </IonRow>
+        </IonTitle>
+      </IonToolbar>
+    </IonHeader>
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
@@ -81,8 +104,8 @@ const App: React.FC = () => (
             <IonLabel>Tab 2</IonLabel>
           </IonTabButton>
           <IonTabButton tab="Notifications" href="/Notifications">
-            <IonIcon aria-hidden="true" icon={notifications} />
-            <IonLabel>Notifications</IonLabel>
+            <IonIcon aria-hidden="true" icon={film} />
+            <IonLabel>Vidéos</IonLabel>
           </IonTabButton>
           <IonTabButton tab="Compte" href="/Compte">
             <IonIcon aria-hidden="true" icon={person} />
