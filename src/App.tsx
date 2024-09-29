@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { ellipse, home, notifications, person, settings, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -44,6 +44,9 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import Accueil from './pages/Accueil/Accueil';
+import Compte from './pages/Compte/Compte';
+import Notifications from './pages/Notifications/Notifications';
 
 setupIonicReact();
 
@@ -52,31 +55,38 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
+          <Route exact path="/Accueil">
+            <Accueil />
           </Route>
           <Route exact path="/tab2">
             <Tab2 />
           </Route>
-          <Route path="/tab3">
-            <Tab3 />
+          <Route exact path="/Notifications">
+            <Notifications />
+          </Route>
+          <Route path="/Compte">
+            <Compte />
           </Route>
           <Route exact path="/">
-            <Redirect to="/tab1" />
+            <Redirect to="/Accueil" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon aria-hidden="true" icon={triangle} />
-            <IonLabel>Tab 1</IonLabel>
+          <IonTabButton tab="Accueil" href="/Accueil">
+            <IonIcon aria-hidden="true" icon={home} />
+            <IonLabel>Accueil</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab2" href="/tab2">
             <IonIcon aria-hidden="true" icon={ellipse} />
             <IonLabel>Tab 2</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Tab 3</IonLabel>
+          <IonTabButton tab="Notifications" href="/Notifications">
+            <IonIcon aria-hidden="true" icon={notifications} />
+            <IonLabel>Notifications</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="Compte" href="/Compte">
+            <IonIcon aria-hidden="true" icon={person} />
+            <IonLabel>Compte</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
