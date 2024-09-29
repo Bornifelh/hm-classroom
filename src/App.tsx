@@ -86,10 +86,10 @@ const App: React.FC = () => (
             <IonIcon aria-hidden="true" icon={home} />
             <IonLabel>Accueil</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="Cours" href="/Cours">
+          {/* <IonTabButton tab="Cours" href="/Cours">
             <IonIcon aria-hidden="true" icon={library} />
             <IonLabel>Mes cours</IonLabel>
-          </IonTabButton>
+          </IonTabButton> */}
           <IonTabButton tab="Vidéos" href="/Videos">
             <IonIcon aria-hidden="true" icon={film} />
             <IonLabel>Mes Vidéos</IonLabel>

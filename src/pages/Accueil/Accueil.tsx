@@ -7,8 +7,8 @@ import Header from "../Header/Header";
 const Accueil : React.FC = () => {
     return(
         <IonPage>
-            <Header/>
-            <IonContent className="ion-padding" fullscreen>
+            {/* <Header/> */}
+            <IonContent  fullscreen>
                 <AccueilComponment/>
             </IonContent>
         </IonPage>

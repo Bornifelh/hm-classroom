@@ -10,4 +10,23 @@ ion-card-content img{
 .content-formation-accueil{
     display: flex;
     flex-wrap: wrap;
+    background-color: #000;
+    color: orange;
 }
+
+ion-card-header,.color-details-niveau {
+    background-color: orange;
+    color: #000;
+}
+
+.content-formation-accueil a{
+    border-radius: 15px;
+    margin: 5px 0;
+}
+.content-formation-accueil a img{
+    border-radius: 15px;
+    object-fit: cover;
+    height: auto;
+    width: 100%;
+}
+
