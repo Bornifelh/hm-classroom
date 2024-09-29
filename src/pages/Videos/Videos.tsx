@@ -6,7 +6,7 @@ const Videos : React.FC = () =>{
     return(
         <IonPage>
             <Header/>
-            <IonContent>
+            <IonContent className="ion-padding">
                 <h1>Videos</h1>
             </IonContent>
         </IonPage>

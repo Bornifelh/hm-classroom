@@ -1,0 +1,8 @@
+.card-content-md {
+    padding: 0;
+}
+
+ion-card-content img{
+    padding: 0;
+    margin: 0;
+}

@@ -8,8 +8,9 @@ const Accueil : React.FC = () => {
     return(
         <IonPage>
             <Header/>
-            <IonContent fullscreen>
-                <h1>Accueil</h1>
+            <IonContent className="ion-padding" fullscreen>
+                <IonTitle>Accueil</IonTitle>
+                <AccueilComponment/>
             </IonContent>
         </IonPage>
     )
