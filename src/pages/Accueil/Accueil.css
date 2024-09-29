@@ -12,6 +12,9 @@ ion-card-content img{
     flex-wrap: wrap;
     background-color: #000;
     color: orange;
+    width: 100%;
+    justify-content: space-between;
+    min-height: 100%;
 }
 
 ion-card-header,.color-details-niveau {
@@ -24,9 +27,9 @@ ion-card-header,.color-details-niveau {
     margin: 5px 0;
 }
 .content-formation-accueil a img{
-    border-radius: 15px;
+    border-radius: 10px;
     object-fit: cover;
-    height: auto;
-    width: 100%;
+    height: 250px;
+    width: 170px;
 }
 
