@@ -2,10 +2,12 @@ import { IonButton, IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonSpinne
 import React, { useEffect, useState } from "react";
 import "./Details.css";
 import { chevronBack, easel, navigateCircle, star, time } from "ionicons/icons";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import axios from "axios";
 
 interface MatiereDetails {
+    lessons_matiere: string;
+    heure_matiere: string;
     id_matiere: number;
     pochette_matiere: string;
     nom_matiere: string;
@@ -25,12 +27,22 @@ interface CoursMatiereListe {
     date_publication_cours: string;
 }
 
+interface ProfDetails{
+    id_prof: number;
+    id_niveau: number;
+    id_matiere: number;
+    nom_prof: number;
+}
+
 
 const DetailsFormation: React.FC = () => {
     const { id } = useParams<{ id: string }>(); // Récupère l'ID de l'URL
     const [matiere, setMatiere] = useState<MatiereDetails | null>(null);
     const [cours, setCours] = useState<CoursMatiereListe[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [prof, setProf] = useState<ProfDetails | null>(null);
+  const history = useHistory();
+
 
     useEffect(() => {
         const fetchMatiereDetails = async () => {
@@ -62,11 +74,33 @@ const DetailsFormation: React.FC = () => {
         fetchCours();
     }, []);
 
+    const handleGoBack = () => {
+        history.goBack();
+      };
+
+      useEffect(() => {
+        const fetchProf = async () => {
+            if (!matiere?.id_prof) return; 
+    
+            try {
+                const response = await axios.get(`http://localhost/backendhmclassroom/details_prof_api.php?id_prof=${matiere?.id_prof}`);
+                setProf(response.data);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des détails du professeur:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchProf();
+    }, [matiere?.id_prof]);
+    
+
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonButton fill='clear' href="/">
+                    <IonButton fill='clear' onClick={handleGoBack}>
                         <IonIcon icon={chevronBack}></IonIcon> Retour
                     </IonButton>
                 </IonToolbar>
@@ -84,13 +118,15 @@ const DetailsFormation: React.FC = () => {
                                 <section className="formation-niveau-prof">
                                     <h3>{matiere.nom_matiere}</h3>
                                     <h5>Niveau 3ème</h5>
-                                    <p>Professeur : <b>{matiere.id_prof}</b></p>
+                                    {prof && (
+                                        <p>Professeur : <b>{prof.nom_prof}</b></p>
+                                    )}
                                 </section>
 
                                 <div className="lessons-duree">
                                     <section>
                                         <IonIcon icon={easel}></IonIcon>
-                                        <IonLabel>9 Leçons</IonLabel>
+                                    <IonLabel>{matiere.lessons_matiere} Leçons</IonLabel>
                                     </section>
                                     <section>
                                         <IonIcon icon={star}></IonIcon>
@@ -98,7 +134,7 @@ const DetailsFormation: React.FC = () => {
                                     </section>
                                     <section>
                                         <IonIcon icon={time}></IonIcon>
-                                        <IonLabel>90 Heures</IonLabel>
+                                        <IonLabel>{matiere.heure_matiere} Heures</IonLabel>
                                     </section>
                                 </div>
 

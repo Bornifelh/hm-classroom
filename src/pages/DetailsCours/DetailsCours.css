@@ -1,0 +1,23 @@
+.video-cours{
+    width: 100%;
+    height: auto;
+    margin: 0;
+}
+.download-others{
+    padding: 10px;
+}
+
+.btn-download img{
+    background-color: orange;
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+}
+
+.details{
+    padding: 10px;
+}
+
+.titre{
+    color: #fff;
+}

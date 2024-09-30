@@ -1,7 +1,9 @@
-import { IonContent, IonPage, IonSpinner } from "@ionic/react";
+import { IonButton, IonContent, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonSpinner, IonTitle, IonToolbar } from "@ionic/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
+import "./DetailsCours.css"
+import { arrowRedo, chevronBack, download, share } from "ionicons/icons";
 
 interface CoursDetail {
         id_matiere: number;
@@ -21,6 +23,8 @@ const DetailsCours : React.FC = () =>{
     const { id } = useParams<{ id: string }>(); // Récupère l'ID de l'URL
     const [cours, setCours] = useState<CoursDetail | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+  const history = useHistory();
+
 
 
     useEffect(() => {
@@ -38,15 +42,41 @@ const DetailsCours : React.FC = () =>{
         fetchCours();
     }, [id]);
 
+    const handleGoBack = () => {
+        history.goBack();
+      };
+
     return(
         <IonPage>
+            <IonHeader>
+        <IonToolbar>
+          <IonGrid>
+            <IonRow>
+              <IonButton fill='clear' onClick={handleGoBack}>
+                <IonIcon icon={chevronBack}></IonIcon>
+              </IonButton>
+              <IonTitle>{cours?.titre_cours}</IonTitle>
+            </IonRow>
+          </IonGrid>
+        </IonToolbar>
+      </IonHeader>
             <IonContent>
             {loading ? (
                     <IonSpinner name="crescent" />
                 ) : (
                     cours && (
                         <div>
-                            <video src={cours.video_link}></video>
+                            <video className="video-cours" src={cours.video_link} autoPlay controls ></video>
+                            <section className="download-others">
+                            <a className="btn-download"><img src={arrowRedo} alt="" /> Partager</a>
+                              <a className="btn-download"><img src={download} alt="" /> Télécharger</a>
+                            </section>
+                            <section className="details">
+                              <IonTitle>{cours.titre_cours}</IonTitle>
+                              <p>{cours.description_cours}</p>  
+                            </section>
+                            
+                            
                         </div>
                         
                     )
