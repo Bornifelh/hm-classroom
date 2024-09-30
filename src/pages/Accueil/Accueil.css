@@ -22,7 +22,7 @@ ion-card-content img{
     background-color: #000;
     color: orange;
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-around;
     min-height: 100%;
 }
 

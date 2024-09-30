@@ -31,7 +31,7 @@ const DetailsFormation : React.FC = () =>{
                         </section>
                         <section>
                             <IonIcon src={time}></IonIcon>
-                            <IonLabel>2 Semaines</IonLabel>
+                            <IonLabel>90 Heures</IonLabel>
                         </section>
                     </div>
                     <div className="details-formation">
