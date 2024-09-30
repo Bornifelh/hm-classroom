@@ -1,0 +1,52 @@
+
+.content-details-formation-detail{
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    margin-top: -50px;
+    z-index: 99;
+    background-color: #000;
+    position: relative;
+    padding: 20px;
+}
+
+.lessons-duree{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.lessons-duree section{
+    display: flex;
+    flex-direction: column;
+}
+
+.lessons-link{
+    display: flex;
+    text-decoration: none;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lessons-link p{
+    padding: 10px;
+}
+
+.content-svg-title-lessons{
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+}
+
+.svg-lessons{
+    width: 30px;
+    margin-right: 10px;
+    background-color: orange;
+    border-radius: 5px;
+}
+
+.portrait-videos{
+    width: 100px;
+    margin: 10px;
+    border-radius: 5px;
+}
