@@ -101,9 +101,7 @@ const App: React.FC = () => (
       <Route exact path="/Notifications">
             <Notifications />
           </Route>
-          <Route exact path="/DetailsFormation">
-            <DetailsFormation />
-          </Route>
+          <Route exact path="/details/:id" component={DetailsFormation} />
     </IonReactRouter>
   </IonApp>
 );
