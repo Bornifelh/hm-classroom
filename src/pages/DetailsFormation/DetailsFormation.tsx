@@ -111,7 +111,7 @@ const DetailsFormation: React.FC = () => {
                                             cours.map((coursItem) => (
                                                 <a
                                                     className="lessons-link"
-                                                    href="#"
+                                                    href={`/detailscours/${coursItem.id_cours}`} 
                                                     key={coursItem.id_cours}
                                                 >
                                                     <div className="content-svg-title-lessons">

@@ -53,6 +53,7 @@ import Notifications from './pages/Notifications/Notifications';
 import Cours from './pages/Cours/Cours';
 import Videos from './pages/Videos/Videos';
 import DetailsFormation from './pages/DetailsFormation/DetailsFormation';
+import DetailsCours from './pages/DetailsCours/DetailsCours';
 
 setupIonicReact();
 
@@ -102,6 +103,7 @@ const App: React.FC = () => (
             <Notifications />
           </Route>
           <Route exact path="/details/:id" component={DetailsFormation} />
+          <Route exact path="/detailscours/:id" component={DetailsCours} />
     </IonReactRouter>
   </IonApp>
 );
