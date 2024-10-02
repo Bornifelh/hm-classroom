@@ -1,0 +1,44 @@
+.content-login{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+ion-title{
+    
+}
+
+.img-login{
+    height: 120px;
+    clip-path: circle();
+    margin-bottom: 30px;
+    object-fit: contain;
+}
+.input-user-compte{
+    margin-bottom: 20px;
+}
+
+.input-user-password{
+    margin-bottom: 20px;
+}
+
+.btn-reset-pass{
+    padding: 10px;
+    background-color: transparent;
+    color: #fff;
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+
+ion-button{
+    clip-path: none;
+    text-transform: none;
+}
+
+
+

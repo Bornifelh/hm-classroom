@@ -54,6 +54,7 @@ import Cours from './pages/Cours/Cours';
 import Videos from './pages/Videos/Videos';
 import DetailsFormation from './pages/DetailsFormation/DetailsFormation';
 import DetailsCours from './pages/DetailsCours/DetailsCours';
+import Login from './pages/Login/Login';
 
 setupIonicReact();
 
@@ -104,6 +105,7 @@ const App: React.FC = () => (
           </Route>
           <Route exact path="/details/:id" component={DetailsFormation} />
           <Route exact path="/detailscours/:id" component={DetailsCours} />
+          <Route exact path="/login" component={Login} />
     </IonReactRouter>
   </IonApp>
 );
