@@ -29,11 +29,11 @@ const Login : React.FC = () =>{
                         <IonButton fill="clear">Besoin d'aide ?</IonButton>
                     </section>
                     <section className="btn-user-register">
-                        <IonButton fill="clear"><b>Nouveau sur  HM Classroom? <br />S'inscrire</b></IonButton>
+                        <IonButton fill="clear"><b>Nouveau sur  HM CLASSROOM? <br />S'inscrire</b></IonButton>
                     </section>
-                    <IonLabel>
+                    <label className="text-bas">
                         La protection de connexion est assurée par Google reCAPTCHA. assurez vous ne pas être un bot
-                    </IonLabel>
+                    </label>
                 </div>
             </IonContent>
         </IonPage>

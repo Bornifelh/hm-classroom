@@ -111,7 +111,7 @@ const DetailsCours: React.FC = () => {
                     <IonIcon icon={help} />
                   </IonButton>
                 <div className="btns">
-                <IonButton>
+                <IonButton routerLink={`/commentcours/${cours.id_cours}`}>
                     <IonIcon icon={chatboxEllipses} />
                   </IonButton>
                   <IonButton onClick={() => downloadAndSaveVideo(cours.video_link, cours.titre_cours)}>

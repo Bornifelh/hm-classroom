@@ -43,9 +43,10 @@
     justify-content: center;
 }
 
-ion-button{
-    clip-path: circle();
+ion-button::part(native){
     display: flex;
     justify-content: center;
     align-items: center;
+    clip-path: circle();
 }
+

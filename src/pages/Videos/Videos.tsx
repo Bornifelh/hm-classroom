@@ -50,7 +50,7 @@ const Videos: React.FC = () => {
         <IonPage>
           <Header />
           <IonContent className="ion-padding">
-            <h3>Vidéo(s) téléchargée(s)</h3>
+            <h3>Cours téléchargé(s)</h3>
             <div className="content-all-content">
               {videos.length > 0 ? (
                 videos.map((video) => (

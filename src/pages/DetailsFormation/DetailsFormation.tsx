@@ -101,7 +101,7 @@ const DetailsFormation: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButton fill='clear' onClick={handleGoBack}>
-                        <IonIcon icon={chevronBack}></IonIcon> Retour
+                        <IonIcon icon={chevronBack}></IonIcon>
                     </IonButton>
                 </IonToolbar>
             </IonHeader>
