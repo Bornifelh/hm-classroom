@@ -6,8 +6,7 @@ const Compte : React.FC = () =>{
     return(
         <IonPage>
             <Header/>
-            <IonContent>
-
+            <IonContent fullscreen>
             </IonContent>
         </IonPage>
     )

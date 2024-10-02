@@ -108,7 +108,9 @@ const DetailsFormation: React.FC = () => {
 
             <IonContent>
                 {loading ? (
-                    <IonSpinner name="crescent" />
+                    <div className="spin-content">
+                        <IonSpinner name="crescent" />
+                    </div>
                 ) : (
                     matiere && (
                         <>

@@ -1,6 +1,7 @@
 import { IonCard, IonCardContent, IonCardHeader, IonContent, IonIcon, IonLabel, IonPage, IonSpinner, IonTitle } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import "./Accueil.css"
+import logoHM from "./LOGO HM CLASSROOM.ai 01_Plan de travail 1 copie 2.jpg";
 import axios from "axios";
 
 interface Matiere {
@@ -31,7 +32,10 @@ const AccueilComponment : React.FC = () => {
   }, []);
     return(<>
     {loading ? (
+      <div className="spin-content">
+          <img src={logoHM} alt="" />
           <IonSpinner name="crescent" />
+      </div>
         ) : (
         <div className="content-formation-accueil ion-padding">
             {matiere.map((matieres) => (
