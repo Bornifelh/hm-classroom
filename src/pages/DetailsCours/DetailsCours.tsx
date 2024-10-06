@@ -1,13 +1,13 @@
-import { IonButton, IonContent, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonSpinner, IonTitle, IonToolbar } from "@ionic/react";
+import { IonButton, IonContent, IonGrid, IonHeader, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTitle, IonToolbar } from "@ionic/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import "./DetailsCours.css";
-import { File } from '@ionic-native/file';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+// import { File } from '@ionic-native/file';
+// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+// import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { useIonToast } from '@ionic/react';
-import { arrowRedo, chatboxEllipses, chevronBack, download, help, receipt } from "ionicons/icons";
+import { arrowRedo, chatboxEllipses, chevronBack, download, eye, help, receipt } from "ionicons/icons";
 
 interface CoursDetail {
   id_matiere: number;
@@ -57,29 +57,29 @@ const DetailsCours: React.FC = () => {
   };
 
   const downloadAndSaveVideo = async (videoUrl: string, videoTitle: string) => {
-    try {
-      const fileTransfer: FileTransferObject = FileTransfer.create();
-      const fileDirectory = File.dataDirectory; // Répertoire local où stocker le fichier
-      const filePath = `${fileDirectory}${videoTitle}.mp4`; // Nom du fichier
+    // try {
+    //   const fileTransfer: FileTransferObject = FileTransfer.create();
+    //   const fileDirectory = File.dataDirectory; // Répertoire local où stocker le fichier
+    //   const filePath = `${fileDirectory}${videoTitle}.mp4`; // Nom du fichier
 
-      // Télécharger la vidéo
-      const entry = await fileTransfer.download(videoUrl, filePath);
-      console.log('Fichier téléchargé à : ', entry.toURL());
+    //   // Télécharger la vidéo
+    //   const entry = await fileTransfer.download(videoUrl, filePath);
+    //   console.log('Fichier téléchargé à : ', entry.toURL());
 
-      // Enregistrer les détails de la vidéo dans la base de données SQLite
-      const db: SQLiteObject = await SQLite.create({
-        name: 'videos.db',
-        location: 'default',
-      });
+    //   // Enregistrer les détails de la vidéo dans la base de données SQLite
+    //   const db: SQLiteObject = await SQLite.create({
+    //     name: 'videos.db',
+    //     location: 'default',
+    //   });
 
-      await db.executeSql('CREATE TABLE IF NOT EXISTS videos(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, filePath TEXT)', []);
-      await db.executeSql('INSERT INTO videos(title, filePath) VALUES (?, ?)', [videoTitle, filePath]);
+    //   await db.executeSql('CREATE TABLE IF NOT EXISTS videos(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, filePath TEXT)', []);
+    //   await db.executeSql('INSERT INTO videos(title, filePath) VALUES (?, ?)', [videoTitle, filePath]);
 
-      showToast('Vidéo téléchargée et enregistrée avec succès !');
-    } catch (error) {
-      console.error('Erreur lors du téléchargement ou de l\'enregistrement de la vidéo:', error);
-      showToast('Erreur lors du téléchargement de la vidéo.');
-    }
+    //   showToast('Vidéo téléchargée et enregistrée avec succès !');
+    // } catch (error) {
+    //   console.error('Erreur lors du téléchargement ou de l\'enregistrement de la vidéo:', error);
+    //   showToast('Erreur lors du téléchargement de la vidéo.');
+    // }
   };
 
   return (
@@ -107,10 +107,13 @@ const DetailsCours: React.FC = () => {
             <div>
               <video className="video-cours" src={cours.video_link} autoPlay controls></video>
               <section className="download-others">
-                  <IonButton>
+                  <IonButton routerLink={`/quizz/${cours.id_cours}`}>
                     <IonIcon icon={help} />
                   </IonButton>
                 <div className="btns">
+                <IonButton>
+                    <IonIcon icon={eye} />
+                  </IonButton>
                 <IonButton routerLink={`/commentcours/${cours.id_cours}`}>
                     <IonIcon icon={chatboxEllipses} />
                   </IonButton>
@@ -133,6 +136,10 @@ const DetailsCours: React.FC = () => {
             </div>
           )
         )}
+
+        <div className="content-scrore">
+        <h4>Score : 0/5</h4>
+        </div>
       </IonContent>
     </IonPage>
   );

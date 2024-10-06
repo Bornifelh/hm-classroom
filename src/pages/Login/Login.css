@@ -4,10 +4,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-ion-title{
-    
+    background-image: url('./bkground-login.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 20px;
 }
 
 .img-login{
@@ -35,14 +36,15 @@ ion-title{
 
 
 
-ion-button{
+.content-login section ion-button{
     clip-path: none;
     text-transform: none;
+    width: 100%;
 }
 
 .text-bas{
     font-size: 12px;
-
+    text-align: center;
 }
 
 

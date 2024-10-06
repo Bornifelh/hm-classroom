@@ -43,10 +43,18 @@
     justify-content: center;
 }
 
-ion-button::part(native){
+.download-others ion-button::part(native){
     display: flex;
     justify-content: center;
     align-items: center;
     clip-path: circle();
+    width: 100%;
+}
+
+
+.content-scrore{
+    display: flex;
+    justify-content: center;
+    color: orange;
 }
 

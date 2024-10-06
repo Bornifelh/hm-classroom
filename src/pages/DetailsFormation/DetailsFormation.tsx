@@ -1,7 +1,7 @@
-import { IonButton, IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonSpinner, IonTitle, IonToolbar, IonImg } from "@ionic/react";
+import { IonButton, IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonSpinner, IonTitle, IonToolbar, IonImg, IonSearchbar } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import "./Details.css";
-import { chevronBack, easel, navigateCircle, star, time } from "ionicons/icons";
+import { chevronBack, easel, navigateCircle, search, star, time } from "ionicons/icons";
 import { useHistory, useParams } from "react-router";
 import axios from "axios";
 
@@ -121,7 +121,7 @@ const DetailsFormation: React.FC = () => {
                                     <h3>{matiere.nom_matiere}</h3>
                                     <h5>Niveau 3ème</h5>
                                     {prof && (
-                                        <p>Professeur : <b>{prof.nom_prof}</b></p>
+                                        <p>Enseignant(e) : <b>{prof.nom_prof}</b></p>
                                     )}
                                 </section>
 
@@ -142,7 +142,11 @@ const DetailsFormation: React.FC = () => {
 
                                 <div className="details-formation">
                                     <p>{matiere.description}</p>
-                                    <h5>Ce que vous apprendrez :</h5>
+                                    <h5>Cours à reviser :</h5>
+                                    <div className="search-content">
+                                    <IonSearchbar placeholder="Rechercher un cours"></IonSearchbar>
+                                    <IonButton><IonIcon src={search}></IonIcon></IonButton>
+                                    </div>
 
                                     <section className="list-lessons">
                                     {cours.length > 0 ? (

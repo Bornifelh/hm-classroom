@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import "./Videos.css";
 import { alert, checkmarkDoneCircle } from "ionicons/icons";
-import { SQLite, SQLiteObject } from "@ionic-native/sqlite";
-import { File } from "@ionic-native/file";
+// import { SQLite } from "@ionic-native/sqlite";
+// import { File } from "@ionic-native/file";
 import gifCharging from "./giphy.webp";
 
 
@@ -18,33 +18,33 @@ interface Video {
 const Videos: React.FC = () => {
     const [videos, setVideos] = useState<Video[]>([]);
     
-    useEffect(() => {
-        const fetchVideos = async () => {
-        try {
-            const db: SQLiteObject = await SQLite.create({
-            name: "videos.db",
-            location: "default",
-            });
+    // useEffect(() => {
+    //     const fetchVideos = async () => {
+    //     try {
+    //         const db: SQLite = await SQLite.create({
+    //         name: "videos.db",
+    //         location: "default",
+    //         });
     
-            const res = await db.executeSql("SELECT * FROM videos", []);
-            const downloadedVideos: Video[] = [];
+    //         const res = await db.executeSql("SELECT * FROM videos", []);
+    //         const downloadedVideos: Video[] = [];
     
-            for (let i = 0; i < res.rows.length; i++) {
-            downloadedVideos.push({
-                id: res.rows.item(i).id,
-                title: res.rows.item(i).title,
-                filePath: res.rows.item(i).filePath,
-            });
-            }
+    //         for (let i = 0; i < res.rows.length; i++) {
+    //         downloadedVideos.push({
+    //             id: res.rows.item(i).id,
+    //             title: res.rows.item(i).title,
+    //             filePath: res.rows.item(i).filePath,
+    //         });
+    //         }
     
-            setVideos(downloadedVideos);
-        } catch (error) {
-            console.error("Erreur lors de la récupération des vidéos :", error);
-        }
-        };
+    //         setVideos(downloadedVideos);
+    //     } catch (error) {
+    //         console.error("Erreur lors de la récupération des vidéos :", error);
+    //     }
+    //     };
     
-        fetchVideos();
-    }, []);
+    //     fetchVideos();
+    // }, []);
     
     return (
         <IonPage>
@@ -54,7 +54,7 @@ const Videos: React.FC = () => {
             <div className="content-all-content">
               {videos.length > 0 ? (
                 videos.map((video) => (
-                  <a key={video.id} href={File.dataDirectory + video.filePath} className="link-videos">
+                  <a key={video.id} className="link-videos">
                     <section className="img-title">
                       <img
                         src="https://www.turquie.campusfrance.org/sites/pays/files/turquie/styles/mobile_visuel_principal_page/public/medias/images/2019-06/Cours%201.jpg?itok=DM_cZhPd"

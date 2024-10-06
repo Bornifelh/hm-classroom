@@ -16,7 +16,7 @@ import {
   import React, { useState } from "react";
   import "./comment.css";
   import { chevronBack, send } from "ionicons/icons";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
   
   interface Message {
     id: number;
