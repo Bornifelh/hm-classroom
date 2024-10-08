@@ -103,7 +103,6 @@ const Quizz: React.FC = () => {
                     ))}
                   </IonRadioGroup>
                 </div>
-                
              </div> 
             ))
             ) : (

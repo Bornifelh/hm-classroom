@@ -1,0 +1,41 @@
+.content-button{
+    display: flex;
+    justify-content: space-between;
+}
+
+.content-profile{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-profile img{
+    height: 80px;
+    width: 80px;
+    background-color: orange;
+    clip-path: circle();
+}
+
+
+
+.content-settings ion-list{
+    background-color:transparent;
+    border-radius: 10px;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.content-settings ion-item::part(native){
+    background-color:rgba(255, 166, 0, 0.298);
+    
+}
+
+.content-settings ion-icon{
+    color: orange;
+}
+
+.content-settings label{
+    color: orange;
+    margin-left: 15px;
+}

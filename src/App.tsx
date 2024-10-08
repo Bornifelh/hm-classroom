@@ -16,7 +16,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { cart, ellipse, film, home, library, notifications, person, settings, square, triangle } from 'ionicons/icons';
+import { cart, ellipse, ellipsisHorizontal, film, home, library, notifications, person, settings, square, triangle } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -96,8 +96,8 @@ const App: React.FC = () => (
             <IonLabel>Mes Vidéos</IonLabel>
           </IonTabButton>
           <IonTabButton tab="Compte" href="/Compte">
-            <IonIcon aria-hidden="true" icon={person} />
-            <IonLabel>Compte</IonLabel>
+            <IonIcon aria-hidden="true" icon={ellipsisHorizontal} />
+            <IonLabel>Autres</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

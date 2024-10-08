@@ -1,6 +1,12 @@
 .qcm-liste{
     display: flex;
-    padding: 10px;
+    padding: 10px ;
+    border-radius: 10px;
+    margin: 5px 0;
+    background-color: 
+    rgba(255, 166, 0, 0.44);
+
+    color: #000;
 }
 
 .qcm-liste ion-label{
@@ -8,7 +14,8 @@
 }
 
 .item-question{
-    background-color: rgba(255, 166, 0, 0.625);
+    background-color:rgba(255, 166, 0, 0.298);
+
     padding: 10px;
     margin: 10px 0;
     border-radius: 10px;
