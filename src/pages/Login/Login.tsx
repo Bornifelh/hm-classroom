@@ -10,12 +10,12 @@ import {
   import logoHMC from './logo.jpg';
   
   const Login: React.FC = () => {
-    const [identifier, setIdentifier] = useState<string>("");
+    const [login_eleve, setIdentifier] = useState<string>("");
     const [pass_eleve, setPassword] = useState<string>("");
     const [presentToast] = useIonToast();
   
     const handleLogin = async () => {
-      if (!identifier || !pass_eleve) {
+      if (!login_eleve || !pass_eleve) {
         presentToast({
           message: "Veuillez remplir tous les champs",
           duration: 2000,
@@ -31,9 +31,12 @@ import {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin:": "*",
+            "Access-Control-Allow-Methods": "POST",
+            "Access-Control-Allow-Headers": " Content-Type, Authorization"
           },
           body: JSON.stringify({
-            identifier, 
+            login_eleve, 
             pass_eleve,
           }),
         });
@@ -71,10 +74,10 @@ import {
             <section className="input-user-compte">
               <IonInput
                 fill="outline"
-                label="E-mail ou Numéro de phone"
+                label="Utilisateur"
                 labelPlacement="floating"
-                placeholder="E-mail ou Numéro de phone"
-                value={identifier}
+                placeholder="Utilisateur"
+                value={login_eleve}
                 onIonChange={(e) => setIdentifier(e.detail.value!)}
               />
             </section>
