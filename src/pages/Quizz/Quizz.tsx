@@ -12,6 +12,7 @@ import {
   IonTitle,
   IonButton,
   IonIcon,
+  IonFab,
 } from "@ionic/react";
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router";
@@ -25,9 +26,19 @@ interface Question {
   reponse_qcm: string;
 }
 
+interface ReponseQuizz {
+  id_qcm: string;
+  reponse_qcm: string;
+  choice_reponse: string;
+  id_cours: string;
+  statut: string;
+  id_user: string;
+}
+
 const Quizz: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [quizData, setQuizData] = useState<Question[]>([]);
+  const [quizReponse, setQuizReponse] = useState<ReponseQuizz[]>([]);
   const [shuffledQuizData, setShuffledQuizData] = useState<Question[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const history = useHistory();
@@ -67,6 +78,29 @@ const Quizz: React.FC = () => {
   const handleGoBack = () => {
     history.goBack();
   };
+useEffect(() =>{
+  const handlerQuizz = async () => {
+    try {
+      const response = await axios.post(`http://localhost/backendhmclassroom/quizz_insert_update.php`);
+      setQuizReponse(response.data);
+    } catch (error) {
+      // console.error("Erreur lors de la récupération des détails de la matière:", error);
+    } finally {
+      setLoading(false);
+    }
+}})
+
+
+  
+
+  function handlerValideQuizz(): void {
+    try{
+
+    }
+    catch{
+
+    }
+  }
 
   return (
     <IonPage>
@@ -96,7 +130,7 @@ const Quizz: React.FC = () => {
                     {question.choices.map((choice, choiceIndex) => (
                       <div>                      
                       <section className="qcm-liste" key={choiceIndex}>
-                        <IonRadio slot="start" value={choice} />
+                        <IonRadio id="radioQuizz" name="selectquizz" slot="start" value={choice} />
                         <IonLabel>{choice}</IonLabel>
                       </section>
                       </div>
@@ -113,7 +147,14 @@ const Quizz: React.FC = () => {
 
           </div>
         )}
+          <div className="content-button-float">
+
+        <IonFab horizontal="center" vertical="bottom" slot="fixed">
+            <IonButton id="validateQuizz" disabled onClick={handlerValideQuizz} expand="full">Valider</IonButton>
+        </IonFab>
+        </div>
       </IonContent>
+      
     </IonPage>
   );
 };

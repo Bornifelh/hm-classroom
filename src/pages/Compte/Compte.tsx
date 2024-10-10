@@ -43,7 +43,7 @@ const Compte : React.FC = () =>{
                                 <IonIcon src={reader}></IonIcon><label>Cours lus</label>
                             </IonItem>
                             <IonItem>
-                                <IonIcon src={server}></IonIcon><label>Abonnement</label>
+                                <IonIcon src={server}></IonIcon><label>Stockage</label>
                             </IonItem>
                         </IonList>
 

@@ -28,3 +28,13 @@
 ion-toolbar::part(native){
     display: flex;
 }
+
+.content-button-float ion-fab{
+    width: 100%;
+
+}
+
+.content-button-float ion-button{
+    margin: 0 10px;
+    
+}
