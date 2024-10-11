@@ -57,6 +57,7 @@ import DetailsCours from './pages/DetailsCours/DetailsCours';
 import Login from './pages/Login/Login';
 import commentCours from './pages/DetailsCours/commentCours';
 import Quizz from './pages/Quizz/Quizz';
+import Signup from './pages/Login/Signup';
 
 setupIonicReact();
 
@@ -108,6 +109,7 @@ const App: React.FC = () => (
           <Route exact path="/details/:id" component={DetailsFormation} />
           <Route exact path="/detailscours/:id" component={DetailsCours} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
           <Route exact path="/commentcours/:id" component={commentCours} />
           <Route exact path="/quizz/:id" component={Quizz} />
     </IonReactRouter>

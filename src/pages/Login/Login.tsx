@@ -1,4 +1,5 @@
 import {
+    IonAlert,
     IonButton,
     IonContent,
     IonInput,
@@ -8,62 +9,35 @@ import {
   import React, { useState } from "react";
   import './Login.css';
   import logoHMC from './logo.jpg';
+import axios from "axios";
   
   const Login: React.FC = () => {
     const [login_eleve, setIdentifier] = useState<string>("");
     const [pass_eleve, setPassword] = useState<string>("");
     const [presentToast] = useIonToast();
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState<string>('');
   
     const handleLogin = async () => {
-      if (!login_eleve || !pass_eleve) {
-        presentToast({
-          message: "Veuillez remplir tous les champs",
-          duration: 2000,
-          position: "top",
-        });
-        return;
-      }
-  
-      const API_URL = 'http://localhost/backendhmclassroom/user_login.php'; 
-  
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin:": "*",
-            "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": " Content-Type, Authorization"
-          },
-          body: JSON.stringify({
-            login_eleve, 
-            pass_eleve,
-          }),
-        });
-  
-        const result = await response.json();
-        
-        if (response.ok) {
-          presentToast({
-            message: "Connexion réussie !",
-            duration: 2000,
-            position: "top",
-          });
-        } else {
-          presentToast({
-            message: result.message || "Échec de la connexion. Veuillez réessayer.",
-            duration: 2000,
-            position: "top",
-          });
-        }
-      } catch (error) {
-        presentToast({
-          message: "Erreur réseau. Veuillez réessayer.",
-          duration: 2000,
-          position: "top",
-        });
-      }
-    };
+        try {
+            const response = await axios.post('http://localhost/backendhmclassroom/user_login.php', {
+                login_eleve,
+                pass_eleve
+            });
+      
+            if (response.data.success) {
+              // Rediriger vers la page d'accueil après une connexion réussie
+              window.location.href = '/Accueil';
+            } else {
+              setAlertMessage(response.data.message);
+              setShowAlert(true);
+            }
+          } catch (error) {
+            setAlertMessage('Erreur de connexion. Veuillez réessayer.');
+            setShowAlert(true);
+          }
+      };
+      
   
     return (
       <IonPage>
@@ -118,6 +92,13 @@ import {
               La protection de connexion est assurée par Google reCAPTCHA. assurez-vous ne pas être un bot
             </label>
           </div>
+          <IonAlert
+          isOpen={showAlert}
+          onDidDismiss={() => setShowAlert(false)}
+          header={'Erreur'}
+          message={alertMessage}
+          buttons={['OK']}
+        />
         </IonContent>
       </IonPage>
     );

@@ -1,0 +1,16 @@
+.content-signup {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .input-signup-name,
+  .input-signup-username,
+  .input-signup-password,
+  .input-signup-confirm-password {
+    margin-bottom: 20px;
+  }
+  
+  .btn-user-signup {
+    margin-top: 20px;
+  }
+  
