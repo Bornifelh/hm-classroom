@@ -16,6 +16,7 @@ import axios from "axios";
     const [pass_eleve, setPassword] = useState<string>("");
     const [presentToast] = useIonToast();
     const [showAlert, setShowAlert] = useState(false);
+    
     const [alertMessage, setAlertMessage] = useState<string>('');
   
     const handleLogin = async () => {
@@ -27,6 +28,7 @@ import axios from "axios";
       
             if (response.data.success) {
               // Rediriger vers la page d'accueil après une connexion réussie
+             
               window.location.href = '/Accueil';
             } else {
               setAlertMessage(response.data.message);
@@ -95,10 +97,12 @@ import axios from "axios";
           <IonAlert
           isOpen={showAlert}
           onDidDismiss={() => setShowAlert(false)}
-          header={'Erreur'}
+          header={'Informations'}
           message={alertMessage}
           buttons={['OK']}
         />
+
+
         </IonContent>
       </IonPage>
     );

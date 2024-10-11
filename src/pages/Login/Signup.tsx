@@ -21,6 +21,8 @@ import axios from "axios";
     const [finSouscription, setFinSouscription] = useState<string>("");
     const [presentToast] = useIonToast();
     const [showAlert, setShowAlert] = useState(false);
+    const [showAlert2, setShowAlert2] = useState(false);
+    const [alertMessage2, setAlertMessage2] = useState<string>('');
     const [alertMessage, setAlertMessage] = useState<string>('');
   
     const handleSignup = async () => {
@@ -109,7 +111,7 @@ import axios from "axios";
           <IonAlert
           isOpen={showAlert}
           onDidDismiss={() => setShowAlert(false)}
-          header={'Erreur'}
+          header={'Information'}
           message={alertMessage}
           buttons={['OK']}
         />
