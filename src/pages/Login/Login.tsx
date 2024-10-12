@@ -9,37 +9,50 @@ import {
   import React, { useState } from "react";
   import './Login.css';
   import logoHMC from './logo.jpg';
-import axios from "axios";
+  import axios from "axios";
+  import { useHistory } from "react-router-dom"; // Ajoute ceci pour la navigation
   
   const Login: React.FC = () => {
-    const [login_eleve, setIdentifier] = useState<string>("");
+    const [login_eleve, setLoginEleve] = useState<string>("");
     const [pass_eleve, setPassword] = useState<string>("");
     const [presentToast] = useIonToast();
     const [showAlert, setShowAlert] = useState(false);
-    
-    const [alertMessage, setAlertMessage] = useState<string>('');
-  
+    const [alertMessage, setAlertMessage] = useState<string>("");
+    const history = useHistory(); // Hook pour gérer la navigation
+
     const handleLogin = async () => {
         try {
             const response = await axios.post('http://localhost/backendhmclassroom/user_login.php', {
                 login_eleve,
                 pass_eleve
             });
-      
+    
+            console.log('Réponse de l\'API:', response.data); // Vérifie le contenu de la réponse
+    
             if (response.data.success) {
-              // Rediriger vers la page d'accueil après une connexion réussie
-             
-              window.location.href = '/Accueil';
-            } else {
-              setAlertMessage(response.data.message);
-              setShowAlert(true);
+                const userData = {
+                    nom_eleve: response.data.nom_eleve,
+                    login_eleve: response.data.login_eleve,
+                    id_eleve: response.data.id_eleve,
+                    date_souscription: response.data.date_souscription,
+                    fin_souscription: response.data.fin_souscription,
+                    abonnement: response.data.abonnement
+                };
+            
+                localStorage.setItem('user', JSON.stringify(userData));  // Stockage des données
+                window.location.href = '/Accueil';
             }
-          } catch (error) {
+             else {
+                setAlertMessage(response.data.message);
+                setShowAlert(true);
+            }
+        } catch (error) {
             setAlertMessage('Erreur de connexion. Veuillez réessayer.');
             setShowAlert(true);
-          }
-      };
-      
+        }
+    };
+    
+    
   
     return (
       <IonPage>
@@ -54,7 +67,7 @@ import axios from "axios";
                 labelPlacement="floating"
                 placeholder="Utilisateur"
                 value={login_eleve}
-                onIonChange={(e) => setIdentifier(e.detail.value!)}
+                onIonChange={(e) => setLoginEleve(e.detail.value!)}
               />
             </section>
   
@@ -82,7 +95,7 @@ import axios from "axios";
             </section>
   
             <section className="btn-user-register">
-              <IonButton fill="clear">
+              <IonButton fill="clear" routerLink="/signup">
                 <b>
                   Nouveau sur HM CLASSROOM? <br />
                   S'inscrire
@@ -91,22 +104,20 @@ import axios from "axios";
             </section>
   
             <label className="text-bas">
-              La protection de connexion est assurée par Google reCAPTCHA. assurez-vous ne pas être un bot
+              La protection de connexion est assurée par Google reCAPTCHA. assurez-vous de ne pas être un bot
             </label>
           </div>
+  
           <IonAlert
-          isOpen={showAlert}
-          onDidDismiss={() => setShowAlert(false)}
-          header={'Informations'}
-          message={alertMessage}
-          buttons={['OK']}
-        />
-
-
+            isOpen={showAlert}
+            onDidDismiss={() => setShowAlert(false)}
+            header={"Informations"}
+            message={alertMessage}
+            buttons={["OK"]}
+          />
         </IonContent>
       </IonPage>
     );
   };
   
   export default Login;
-  

@@ -45,11 +45,11 @@ ion-list{
     padding: 10px;
     border-top: 1px solid #ddd;
     background-color: #f9f9f9;
-    position: absolute;
-    bottom: 5px;
+    position: relative;
+    /* bottom: 5px;
     width: 95%;
     margin: 0 2.5%;
-    border-radius: 10px;
+    border-radius: 5px; */
   }
   
   /* Champ de saisie des messages */
@@ -63,3 +63,13 @@ ion-list{
     flex-shrink: 0;
   }
   
+
+  .content-bulbes{
+    display: flex;
+    flex-direction: column;
+  }
+
+  ion-centent::part(native){
+    --offset-top: 0px;
+    --offset-bottom: 0px;
+  }

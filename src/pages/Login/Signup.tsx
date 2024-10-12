@@ -10,6 +10,7 @@ import {
   import React, { useState } from "react";
   import './Signup.css';
 import axios from "axios";
+import { useHistory } from "react-router";
   
   const Signup: React.FC = () => {
     const [nom_eleve, setNomEleve] = useState<string>("");
@@ -22,6 +23,7 @@ import axios from "axios";
     const [presentToast] = useIonToast();
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState<string>('');
+    const history = useHistory();
   
     const handleSignup = async () => {
         try {
@@ -35,7 +37,7 @@ import axios from "axios";
             });
       
             if (response.data.success) {
-              window.location.href = '/Login';
+                history.push('/Login');
 
             } else {
                 setAlertMessage(response.data.message);

@@ -14,6 +14,16 @@ interface Matiere {
 const AccueilComponment : React.FC = () => {
     const [matiere, setMatiere] = useState<Matiere[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<any>(null);  // useState utilisé correctement ici
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user'); // Récupération des données utilisateur
+    if (!userData) {
+      window.location.href = '/Login'; // Redirection si l'utilisateur n'est pas trouvé
+    } else {
+      setUser(JSON.parse(userData)); // Stockage des données utilisateur dans le state
+    }
+  }, []);
 
   useEffect(() => {
     // Fonction pour récupérer les cours depuis l'API PHP
@@ -30,6 +40,8 @@ const AccueilComponment : React.FC = () => {
 
     fetchMatiere();
   }, []);
+
+
     return(<>
     {loading ? (
       <div className="spin-content">
