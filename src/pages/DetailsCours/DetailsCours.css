@@ -1,0 +1,52 @@
+.video-cours{
+    width: 100%;
+    height: auto;
+    margin: 0;
+}
+.download-others{
+    display: flex;
+    padding: 0 5px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.download-others div{
+    display: flex;
+}
+
+.download-others a{
+    margin: 0 5px;
+}
+
+.btn-download img{
+    background-color: orange;
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+}
+
+.details{
+    padding: 0 10px;
+}
+
+.titre{
+    color: #fff;
+    width: 80%;
+    padding: 0 20px;
+}
+
+.spin-content{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ion-button::part(native){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    clip-path: circle();
+}
+

@@ -1,36 +1,51 @@
-import { IonCard, IonCardContent, IonCardHeader, IonContent, IonIcon, IonLabel, IonPage, IonTitle } from "@ionic/react";
-import React from "react";
+import { IonCard, IonCardContent, IonCardHeader, IonContent, IonIcon, IonLabel, IonPage, IonSpinner, IonTitle } from "@ionic/react";
+import React, { useEffect, useState } from "react";
 import "./Accueil.css"
-import matriix from "./matrix.jpg"
+import logoHM from "./LOGO HM CLASSROOM.ai 01_Plan de travail 1 copie 2.jpg";
+import axios from "axios";
 
-
+interface Matiere {
+    id_matiere: number;
+    pochette_matiere: string;
+    nom_matiere: string;
+    description: string;
+    id_prof: string;
+  }
 const AccueilComponment : React.FC = () => {
-    return(
+    const [matiere, setMatiere] = useState<Matiere[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    // Fonction pour récupérer les cours depuis l'API PHP
+    const fetchMatiere = async () => {
+      try {
+        const response = await axios.get('http://localhost/backendhmclassroom/category_api.php'); // Remplace par l'URL de ton API
+        setMatiere(response.data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des cours:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMatiere();
+  }, []);
+    return(<>
+    {loading ? (
+      <div className="spin-content">
+          <img src={logoHM} alt="" />
+          <IonSpinner name="crescent" />
+      </div>
+        ) : (
         <div className="content-formation-accueil ion-padding">
-            <a href="./DetailsFormation">
-                <img src="https://www.turquie.campusfrance.org/sites/pays/files/turquie/styles/mobile_visuel_principal_page/public/medias/images/2019-06/Cours%201.jpg?itok=DM_cZhPd" alt="" srcSet="" />
+            {matiere.map((matieres) => (
+            <a href={`/details/${matieres.id_matiere}`} key={matieres.id_matiere}>
+                <img src={matieres.pochette_matiere} alt="" srcSet="" />
             </a>
-
-            <a href="./DetailsFormation">
-                <img src={matriix} alt="Mtrix" srcSet="" />
-            </a>
-
-            <a href="./DetailsFormation">
-                <img src="https://www.bienenseigner.com/wp-content/uploads/2021/02/comment-rendre-un-cours-plus-attractif.jpg" alt="" srcSet="" />
-            </a>
-
-            <a href="./DetailsFormation">
-                <img src="https://www.turquie.campusfrance.org/sites/pays/files/turquie/styles/mobile_visuel_principal_page/public/medias/images/2019-06/Cours%201.jpg?itok=DM_cZhPd" alt="" srcSet="" />
-            </a>
-
-            <a href="./DetailsFormation">
-                <img src={matriix} alt="Mtrix" srcSet="" />
-            </a>
-
-            <a href="./DetailsFormation">
-                <img src="https://www.bienenseigner.com/wp-content/uploads/2021/02/comment-rendre-un-cours-plus-attractif.jpg" alt="" srcSet="" />
-            </a>
+            ))}
         </div>
+    )}
+        </>
     )
 }
 export default AccueilComponment;

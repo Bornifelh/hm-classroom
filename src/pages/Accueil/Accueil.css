@@ -16,13 +16,29 @@ ion-card-content img{
     margin: 0;
 }
 
+.spin-content{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spin-content img{
+    width: 120px;
+    height: auto;
+    margin-bottom: 10px;
+    clip-path: circle();
+}
+
 .content-formation-accueil{
     display: flex;
     flex-wrap: wrap;
     background-color: #000;
     color: orange;
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-around;
     min-height: 100%;
 }
 
