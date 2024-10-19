@@ -1,0 +1,19 @@
+.content-resultat{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: rgba(255, 166, 0, 0.255);
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.content-resultat span{
+    color: red;
+}
+
+.btns-content{
+    display: flex;
+    position: absolute;
+    bottom: 0;
+}

@@ -11,8 +11,8 @@
 }
 
 .content-profile img{
-    height: 80px;
-    width: 80px;
+    height: 120px;
+    width: auto;
     background-color: orange;
     clip-path: circle();
 }

@@ -34,20 +34,35 @@ interface ProfDetails{
     nom_prof: number;
 }
 
+interface NiveauEleve{
+    id_niveau: number;
+    nom_niveau: string;
+    pochette_niveau: string; 
+}
+
 
 const DetailsFormation: React.FC = () => {
     const { id } = useParams<{ id: string }>(); // Récupère l'ID de l'URL
     const [matiere, setMatiere] = useState<MatiereDetails | null>(null);
     const [cours, setCours] = useState<CoursMatiereListe[]>([]);
+    const [niveau, setNiveau] = useState<NiveauEleve | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [prof, setProf] = useState<ProfDetails | null>(null);
-  const history = useHistory();
+    const [user, setUser] = useState<any>(null);
+    const history = useHistory();
+
+    useEffect(() => {
+        const userData = localStorage.getItem('user');
+        if (userData) {
+          setUser(JSON.parse(userData));
+        }
+      }, []);
 
 
     useEffect(() => {
         const fetchMatiereDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost/backendhmclassroom/details_api.php?id_matiere=${id}`);
+                const response = await axios.get(`https://hmproges.online/backendhmclassroom/details_api.php?id_matiere=${id}`);
                 setMatiere(response.data);
             } catch (error) {
                 console.error("Erreur lors de la récupération des détails de la matière:", error);
@@ -60,9 +75,29 @@ const DetailsFormation: React.FC = () => {
     }, [id]);
 
     useEffect(() => {
+        const fetchNiveauEleve = async () => {
+          if (user?.id_eleve && user.id_niveau) {
+            try {
+              const response = await axios.get(`https://hmproges.online/backendhmclassroom/recup_niveau_eleve.php?id_niveau=${user?.id_niveau}`);
+            //   console.log(user.id_niveau);
+              setNiveau(response.data);
+            } catch (error) {
+              console.error("Erreur lors de la récupération des détails de la matière:", error);
+            } finally {
+              setLoading(false);
+            }
+          } else {
+            // console.error("L'utilisateur ou l'id_niveau n'est pas défini.");
+          }
+        };
+    
+        fetchNiveauEleve();
+      }, [user]);
+
+    useEffect(() => {
         const fetchCours = async () => {
             try {
-                const response = await axios.get(`http://localhost/backendhmclassroom/liste_cours_api.php?id_matiere=${id}`);
+                const response = await axios.get(`https://hmproges.online/backendhmclassroom/liste_cours_api.php?id_matiere=${id}`);
                 setCours(response.data);
             } catch (error) {
                 console.error("Erreur lors de la récupération des détails de la matière:", error);
@@ -83,7 +118,7 @@ const DetailsFormation: React.FC = () => {
             if (!matiere?.id_prof) return; 
     
             try {
-                const response = await axios.get(`http://localhost/backendhmclassroom/details_prof_api.php?id_prof=${matiere?.id_prof}`);
+                const response = await axios.get(`https://hmproges.online/backendhmclassroom/details_prof_api.php?id_prof=${matiere?.id_prof}`);
                 setProf(response.data);
             } catch (error) {
                 console.error("Erreur lors de la récupération des détails du professeur:", error);
@@ -119,7 +154,7 @@ const DetailsFormation: React.FC = () => {
                             <div className="content-details-formation-detail">
                                 <section className="formation-niveau-prof">
                                     <h3>{matiere.nom_matiere}</h3>
-                                    <h5>Niveau 3ème</h5>
+                                    <h5>Votre niveau {niveau?.nom_niveau}</h5>
                                     {prof && (
                                         <p>Enseignant(e) : <b>{prof.nom_prof}</b></p>
                                     )}

@@ -8,6 +8,10 @@ http://ionicframework.com/docs/theming/ */
     --ion-tabbar-selected-color: orange;
     --ion-tabbar-color: rgba(255, 166, 0, 0.6);
   }
+
+  ion-button {
+    --ripple-color: rgba(0, 0, 0, 0.1); /* Par exemple, un ripple plus discret */
+  }
   
   ion-tab-bar {
       --background: var(--ion-tabbar-background);

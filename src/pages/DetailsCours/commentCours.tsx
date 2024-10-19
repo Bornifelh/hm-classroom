@@ -14,6 +14,7 @@ import {
 import { chevronBack, send } from "ionicons/icons";
 import { useHistory, useParams } from "react-router";
 import axios from "axios";
+import { SQLite, SQLiteObject } from "@awesome-cordova-plugins/sqlite";
 import "./comment.css";
 
 interface Message {
@@ -29,9 +30,10 @@ const CommentCours: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Récupère l'ID du cours depuis l'URL
   const [messages, setMessages] = useState<Message[]>([]);
   const [messageText, setMessageText] = useState<string>("");
-  const history = useHistory();
   const [user, setUser] = useState<any>(null);
-  const [idCours, setIdCours] = useState<string>(id); // Utilisation de l'ID du cours depuis l'URL
+  const [idCours, setIdCours] = useState<string>(id);
+  const history = useHistory();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -40,53 +42,93 @@ const CommentCours: React.FC = () => {
     } else {
       const parsedUser = JSON.parse(userData);
       setUser(parsedUser);
-      const idEleve = parsedUser.id_eleve;
-
-      const fetchMessages = async () => {
-        try {
-          const response = await axios.get(
-            `http://localhost/backendhmclassroom/getMessages.php?id_cours=${idCours}`
-          );
-          if (response.data) {
-            setMessages(response.data);
-          }
-        } catch (error) {
-          console.error("Erreur lors de la récupération des messages:", error);
-        }
-      };
+      initDatabase();
       fetchMessages();
-
     }
   }, [idCours]);
+
+  // Initialiser la base de données SQLite
+  const initDatabase = async () => {
+    try {
+      const db: SQLiteObject = await SQLite.create({
+        name: "messages.db",
+        location: "default",
+      });
+
+      await db.executeSql(
+        `CREATE TABLE IF NOT EXISTS messages (
+          id_comment_cours INTEGER PRIMARY KEY AUTOINCREMENT,
+          comments_cours TEXT,
+          comment_users TEXT,
+          id_cours TEXT,
+          id_eleve TEXT,
+          date_comments TEXT
+        )`,
+        []
+      );
+    } catch (error) {
+      console.error("Erreur lors de l'initialisation de la base de données:", error);
+    }
+  };
+
+  // Fonction pour récupérer les messages depuis SQLite
+  const fetchMessages = async () => {
+    setLoading(true);
+    try {
+      const db: SQLiteObject = await SQLite.create({
+        name: "messages.db",
+        location: "default",
+      });
+
+      const res = await db.executeSql("SELECT * FROM messages WHERE id_cours = ?", [idCours]);
+      const retrievedMessages: Message[] = [];
+
+      for (let i = 0; i < res.rows.length; i++) {
+        retrievedMessages.push(res.rows.item(i));
+      }
+      setMessages(retrievedMessages);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des messages:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fonction pour envoyer un message
   const handleSendMessage = () => {
     if (messageText.trim() === "" || !user) return; // Vérification pour empêcher l'envoi de message vide
-
-    const newMessage = {
+  
+    const newMessage: Message = {
+      id_comment_cours: 0, // Placeholder, car l'ID sera généré par le serveur
       comments_cours: messageText,
-      comment_users: user.nom_eleve, // Utilisateur actuel
-      id_cours: idCours, // Assurez-vous que idCours est défini
-      id_eleve: user.id_eleve, // Utilisateur actuel
-      date_comments: user.date_comments,
+      comment_users: user.nom_eleve,
+      id_cours: idCours,
+      id_eleve: user.id_eleve,
+      date_comments: new Date().toISOString(), // Ajoutez la date actuelle
     };
-
-    // Envoyer le message à l'API pour l'insertion avec Axios
+  
+    // Envoyer le message via l'API REST (pour l'insertion dans la base de données)
     axios
-      .post("http://localhost/backendhmclassroom/insertMessage.php", newMessage, {
+      .post("https://hmproges.online/backendhmclassroom/insertMessage.php", newMessage, {
         headers: {
           "Content-Type": "application/json",
         },
       })
       .then((response) => {
         if (response.data.success) {
-          const insertedMessage = response.data.message; // Obtenir l'ID généré par le back-end
-          setMessages([...messages, insertedMessage]); // Ajouter le message à l'interface
+          const insertedMessage = {
+            ...newMessage,
+            id_comment_cours: response.data.message.id_comment_cours, // ID du message inséré
+          };
+          setMessages((prevMessages) => [...prevMessages, insertedMessage]); // Mettre à jour les messages avec le nouveau message
           setMessageText(""); // Réinitialiser le champ de texte
         } else {
-          console.error("Erreur:");
+          console.error("Erreur lors de l'envoi du message.");
         }
       })
       .catch((error) => console.error("Erreur lors de l'insertion du message:", error));
   };
+  
 
   const handleGoBack = () => {
     history.goBack();
@@ -109,7 +151,9 @@ const CommentCours: React.FC = () => {
 
       <IonContent fullscreen className="ion-padding">
         <div className="content-bulbes">
-          {Array.isArray(messages) && messages.length > 0 ? (
+          {loading ? (
+            <p>Chargement...</p>
+          ) : Array.isArray(messages) && messages.length > 0 ? (
             messages.map((message) => (
               <div
                 key={message.id_comment_cours}
@@ -120,10 +164,8 @@ const CommentCours: React.FC = () => {
                 <section>
                   <a href="">{message.comment_users}</a>
                   <p>{message.comments_cours}</p>
-                  <p>{message.date_comments}</p>
-
+                  <p>{new Date(message.date_comments).toLocaleString()}</p>
                 </section>
-
               </div>
             ))
           ) : (

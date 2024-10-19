@@ -33,13 +33,13 @@ ion-card-content img{
 }
 
 .content-formation-accueil{
-    display: flex;
-    flex-wrap: wrap;
+    gap: 10px;
+    display: grid;
     background-color: #000;
     color: orange;
     width: 100%;
-    justify-content: space-around;
-    min-height: 100%;
+    min-height: auto;
+    grid-template-columns: 2fr 2fr;
 }
 
 ion-card-header,.color-details-niveau {
@@ -50,6 +50,7 @@ ion-card-header,.color-details-niveau {
 .content-formation-accueil a{
     border-radius: 15px;
     margin: 5px 0;
+
 }
 .content-formation-accueil a img{
     border-radius: 10px;

@@ -11,7 +11,7 @@ import {
   import logoHMC from './logo.jpg';
   import axios from "axios";
   import { useHistory } from "react-router-dom"; // Ajoute ceci pour la navigation
-  
+  import { motion } from 'framer-motion';
   const Login: React.FC = () => {
     const [login_eleve, setLoginEleve] = useState<string>("");
     const [pass_eleve, setPassword] = useState<string>("");
@@ -22,7 +22,7 @@ import {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost/backendhmclassroom/user_login.php', {
+            const response = await axios.post('https://hmproges.online/backendhmclassroom/user_login.php', {
                 login_eleve,
                 pass_eleve
             });
@@ -36,7 +36,9 @@ import {
                     id_eleve: response.data.id_eleve,
                     date_souscription: response.data.date_souscription,
                     fin_souscription: response.data.fin_souscription,
-                    abonnement: response.data.abonnement
+                    abonnement: response.data.abonnement,
+                    id_niveau: response.data.id_niveau,
+                    image_profile_eleve: response.data.image_profile_eleve
                 };
             
                 localStorage.setItem('user', JSON.stringify(userData));  // Stockage des données
@@ -52,9 +54,17 @@ import {
         }
     };
     
+    const [toggle, setToggle] = useState(true);
     
   
     return (
+      <div style={{ width: '100%', height: '100vh', backgroundColor: '#000' }}>
+      <motion.div
+        initial={{ x: '100vw' }}
+        animate={{ x: toggle ? 0 : '-100vw' }}
+        transition={{ duration: 0.3 }}
+        style={{ width: '100%', height: '100vh', backgroundColor: '#000'}}
+      >
       <IonPage>
         <IonContent>
           <div className="content-login">
@@ -62,7 +72,7 @@ import {
   
             <section className="input-user-compte">
               <IonInput
-                fill="outline"
+                // fill="outline"
                 label="Utilisateur"
                 labelPlacement="floating"
                 placeholder="Utilisateur"
@@ -73,7 +83,7 @@ import {
   
             <section className="input-user-password">
               <IonInput
-                fill="outline"
+                // fill="outline"
                 type="password"
                 label="Mot de passe"
                 labelPlacement="floating"
@@ -81,8 +91,9 @@ import {
                 value={pass_eleve}
                 onIonChange={(e) => setPassword(e.detail.value!)}
               />
-              <button className="btn-reset-pass">Mot de passe oublié ?</button>
             </section>
+            {/* <button className="btn-reset-pass">Mot de passe oublié ?</button> */}
+
   
             <section className="btn-user-login">
               <IonButton fill="outline" onClick={handleLogin}>
@@ -117,6 +128,8 @@ import {
           />
         </IonContent>
       </IonPage>
+      </motion.div>
+      </div>
     );
   };
   

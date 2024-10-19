@@ -17,10 +17,7 @@ const Accueil : React.FC = () => {
     return(
         <IonPage>
             {/* <Header/> */}
-            <IonContent  fullscreen>
-                <div className="div-content-searchbar">
-                    <IonSearchbar placeholder="Recherche cours..."></IonSearchbar>
-                </div>
+            <IonContent  fullscreen className="ion-padding">
                 <AccueilComponment/>
             </IonContent>
         </IonPage>

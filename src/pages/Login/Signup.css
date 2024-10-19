@@ -1,16 +1,89 @@
 .content-signup {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    /* height: 100%; */
+    justify-content: center;
+    align-content: center;
+
+    height: 100%;
+    width: 100%;
+    background-image: url('./bkground-login.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
     padding: 20px;
-    text-align: center;
   }
   
+  .img-login{
+    height: 120px;
+    clip-path: circle();
+    margin: 20px 0;
+    object-fit: contain;
+}
   .input-signup-name,
   .input-signup-username,
   .input-signup-password,
-  .input-signup-confirm-password {
+  /* .input-signup-confirm-password, */
+  .select-niveau-name {
+    margin-bottom: 10px;
+    border: solid 1px orange;
+    border-radius: 5px;
+    padding: 0 20px;
+    /* text-align: center; */
+  }
+
+  .text-titre{
+    text-align: center;
     margin-bottom: 20px;
   }
   
   .btn-user-signup {
-    margin-top: 20px;
+    /* margin-top: 10px; */
+    text-transform: none;
+    justify-content: center;
+    display: flex;
+  }
+
+  .btn-user-signup ion-button{
+    text-transform: none;
+    width: 100%;
+    height: 50px;
   }
   
+  /* .content-signup section ion-select{
+    border: solid 1px;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  } */
+
+  .content-signup section select-label{
+    text-align: center;
+  }
+
+  .content-img-text{
+    text-align: center;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-img-text img{
+    width: 150px;
+  }
+
+  .btn-login{
+    text-decoration: none;
+    color: orange;
+  }
+
+
+  .account-btn{
+    text-align: center;
+    margin: 15px 0;
+    text-decoration: none;
+    color: orange;
+  }

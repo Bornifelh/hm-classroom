@@ -16,11 +16,12 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import { BrowserRouter as Router, Switch, useLocation } from 'react-router-dom';
 import { cart, ellipse, ellipsisHorizontal, film, home, library, notifications, person, settings, square, triangle } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
-
+import { AnimatePresence, motion } from 'framer-motion';
 /* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
@@ -60,16 +61,25 @@ import Quizz from './pages/Quizz/Quizz';
 import Signup from './pages/Login/Signup';
 import { useEffect, useState } from 'react';
 import Order from './pages/Paiement/Order';
+import Score from './pages/Quizz/Score';
+import ModifCompte from './pages/Login/ModifCompte';
+import Erreur from './pages/Paiement/Erreur';
+import Success from './pages/Login/Success';
+import AnimatedPage from "./AnimatedPage";
 
 setupIonicReact();
 
 
 const App: React.FC = () => (
+
+  
   <IonApp>
    {/* <Header/> */}
+
     <IonReactRouter>
+
       <IonTabs>
-        <IonRouterOutlet>
+        <IonRouterOutlet animated={false}>
           <Route exact path="/Accueil">
             <Accueil />
           </Route>
@@ -116,6 +126,10 @@ const App: React.FC = () => (
           <Route exact path="/commentcours/:id" component={commentCours} />
           <Route exact path="/quizz/:id" component={Quizz} />
           <Route exact path="/order" component={Order} />
+          <Route exact path="/score/:id" component={Score} />
+          <Route exact path="/modifcompte/:id" component={ModifCompte} />
+          <Route exact path="/erreurpaiement" component={Erreur} />
+          <Route exact path="/success" component={Success} />
     </IonReactRouter>
   </IonApp>
 );
