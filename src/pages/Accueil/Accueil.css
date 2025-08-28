@@ -40,6 +40,7 @@ ion-card-content img{
     width: 100%;
     min-height: auto;
     grid-template-columns: 2fr 2fr;
+    justify-items: center;
 }
 
 ion-card-header,.color-details-niveau {
@@ -49,13 +50,13 @@ ion-card-header,.color-details-niveau {
 
 .content-formation-accueil a{
     border-radius: 15px;
-    margin: 5px 0;
+    /* margin: 5px 0; */
 
 }
 .content-formation-accueil a img{
     border-radius: 10px;
     object-fit: cover;
-    height: 250px;
+    height: 90px;
     width: 170px;
 }
 
@@ -71,4 +72,17 @@ ion-card-header,.color-details-niveau {
     --placeholder-color:var(--ion-color-primary);
     --background:(var(--ion-tabbar-background));
     --border:var(--ion-color-primary);
+}
+
+
+#btnAbonnement {
+    position: absolute;
+    bottom: 120px;
+    padding: 18px 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    background-color: orange;
+    color: #000;
+    font-weight: bold;
 }

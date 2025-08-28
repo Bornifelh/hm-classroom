@@ -9,6 +9,19 @@
     padding: 20px;
 }
 
+.sc-ion-searchbar-md-h {
+    --border-radius: 10px;
+    --icon-color: #000;
+    --color: #000;
+    --placeholder-color: #000;
+    --background: #fff;
+    --border: #fff;
+}
+
+.list-lessons{
+    width: 100%;
+}
+
 .spin-content{
     height: 100%;
     width: 100%;
@@ -29,22 +42,19 @@
 }
 
 .lessons-link{
-    display: flex;
     text-decoration: none;
-    justify-content: space-between;
-    align-items: center;
+    width: 100%;
 }
 
 .lessons-link p{
-    padding: 10px;
+    padding: 0px;
 }
 
-.content-svg-title-lessons{
-    width: 100%;
-    display: flex;
-    text-decoration: none;
-    align-items: center;
+.lessons-link ion-row{
+    align-items: flex-end;
 }
+
+
 
 .svg-lessons{
     width: 30px;
@@ -55,19 +65,37 @@
 }
 
 .portrait-videos{
-    width: 80px;
-    margin: 10px 0;
-    /* border-radius: 5px; */
-    /* clip-path: circle(); */
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
 }
+
 
 .search-content{
     display: flex;
     justify-content: space-between;
-    border-bottom: 2px solid orange;
-    padding-bottom: 10px;
+    /* border-bottom: 2px solid orange;
+    padding-bottom: 10px; */
 }
 
 .search-content ion-button{
     clip-path: circle();
+}
+
+.content-duree-soustitre-titre{
+    margin: 0;
+    width: auto;
+}
+
+.content-duree-soustitre-titre p{
+    margin: 0;
+}
+
+
+.content-col ion-col{
+    width: 100%;
+    display: flex;
+    text-align: right;
+    justify-content: flex-end;
 }

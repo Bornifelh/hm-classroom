@@ -10,6 +10,15 @@
     align-items: center;
 }
 
+.div-row{
+    display: flex;
+    justify-items: center;
+}
+
+.div-row ion-col{
+    display: flex;
+}
+
 .download-others div{
     display: flex;
 }
@@ -54,7 +63,31 @@
 
 .content-scrore{
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     color: orange;
+    margin: 0;
 }
 
+.content-scrore p{
+    margin: 0;
+}
+
+
+.non-list{
+    margin: 0 10px;
+    color: red;
+}
+
+
+.text-vues{
+    color: orange;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.content-col ion-col{
+    width: 100%;
+    display: flex;
+    text-align: right;
+    justify-content: flex-end;
+}

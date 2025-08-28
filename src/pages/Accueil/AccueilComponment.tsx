@@ -1,69 +1,81 @@
-import { IonCard, IonCardContent, IonCardHeader, IonContent, IonIcon, IonLabel, IonPage, IonSpinner, IonTitle } from "@ionic/react";
-import React, { useEffect, useState } from "react";
+import {
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonContent,
+  IonIcon,
+  IonLabel,
+  IonPage,
+  IonSpinner,
+  IonTitle,
+} from "@ionic/react";
+import React, { useEffect } from "react";
 import "./Accueil.css";
 import logoHM from "../Login/logo.jpg";
-import axios from "axios";
-
-interface Matiere {
-  id_matiere: number;
-  pochette_matiere: string;
-  nom_matiere: string;
-  description: string;
-  id_prof: string;
-}
+import { useHistory } from "react-router";
+import { Browser } from "@capacitor/browser";
+import { useAuth } from "../../contexts/AuthContext";
+import { useMatieres } from "../../hooks/useMatieres";
 
 const AccueilComponment: React.FC = () => {
-  const [matiere, setMatiere] = useState<Matiere[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [user, setUser] = useState<any>(null);
+  const { user } = useAuth();
+  const { data: matiere, isLoading: loading, error } = useMatieres();
 
-  // Premier useEffect pour récupérer les données utilisateur
+  // Gestion de l'affichage du bouton d'abonnement
   useEffect(() => {
-    const userData = localStorage.getItem("user"); // Récupération des données utilisateur depuis localStorage
-    if (!userData) {
-      window.location.href = "/Login"; // Redirection si l'utilisateur n'est pas trouvé
-    } else {
-      setUser(JSON.parse(userData)); // Stockage des données utilisateur dans le state
+    const ButtonAbonement = document.getElementById("btnAbonnement");
+    if (ButtonAbonement) {
+      if (user && user.abonnement == 0) {
+        ButtonAbonement.style.display = "flex";
+      } else {
+        ButtonAbonement.style.display = "none";
+      }
     }
-  }, []);
+  }, [user]);
 
-  // Second useEffect pour récupérer les matières, déclenché après que 'user' soit défini
-  useEffect(() => {
-    if (user && user.id_niveau) {
-      const fetchMatiere = async () => {
-        try {
-          const response = await axios.get(
-            `https://hmproges.online/backendhmclassroom/category_api.php?id_niveau=${user.id_niveau}`
-          );
-          setMatiere(response.data);
-        } catch (error) {
-          console.error("Erreur lors de la récupération des cours:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
+  const openWebView = async () => {
+    await Browser.open({
+      url: `https://hmproges.online/hm_classroom_pay/?id=${user?.id_eleve}`,
+    });
+  };
 
-      fetchMatiere();
-    }
-  }, [user && user.id_niveau]);
+  if (loading) {
+    return (
+      <div className="spin-content">
+        <img src={logoHM} alt="" />
+        <IonSpinner name="crescent" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-content">
+        <p>Erreur lors du chargement des matières</p>
+        <IonButton onClick={() => window.location.reload()}>
+          Réessayer
+        </IonButton>
+      </div>
+    );
+  }
 
   return (
     <>
-      {loading ? (
-        <div className="spin-content">
-          <img src={logoHM} alt="" />
-          <IonSpinner name="crescent" />
-        </div>
-      ) : (
-        <div className="content-formation-accueil ion-padding">
-          {matiere.map((matieres) => (
-            <a href={`/details/${matieres.id_matiere}`} key={matieres.id_matiere}>
-              <img src={matieres.pochette_matiere} alt={matieres?.nom_matiere} />
+      <div className="content-formation-accueil">
+        {matiere?.map((matieres) => (
+          <a href={`/details/${matieres.id_matiere}`} key={matieres.id_matiere}>
+            <img src={matieres.pochette_matiere} alt={matieres?.nom_matiere} />
+          </a>
+        ))}
+      </div>
 
-            </a>
-          ))}
-        </div>
-      )}
+      {/* <a
+        id="btnAbonnement"
+        style={{ textDecoration: "none" }}
+        onClick={openWebView}>
+        Abonnez-vous
+      </a> */}
     </>
   );
 };

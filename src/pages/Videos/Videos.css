@@ -53,5 +53,9 @@
     width: 150px;
     /* background-color: orange; */
     clip-path: circle();
-    margin: 10px;
+    margin: 30px;
+}
+
+.no-videos p{
+    margin: 0px;
 }

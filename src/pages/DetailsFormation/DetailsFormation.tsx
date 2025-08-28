@@ -1,222 +1,301 @@
-import { IonButton, IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonSpinner, IonTitle, IonToolbar, IonImg, IonSearchbar } from "@ionic/react";
-import React, { useEffect, useState } from "react";
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonLabel,
+  IonPage,
+  IonSpinner,
+  IonTitle,
+  IonToolbar,
+  IonImg,
+  IonSearchbar,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonAlert,
+} from "@ionic/react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./Details.css";
-import { chevronBack, easel, navigateCircle, search, star, time } from "ionicons/icons";
+import {
+  chevronBack,
+  easel,
+  navigateCircle,
+  playCircle,
+  push,
+  search,
+  star,
+  time,
+} from "ionicons/icons";
 import { useHistory, useParams } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
+import { secureStorage } from "../../utils/security";
 import axios from "axios";
 
 interface MatiereDetails {
-    lessons_matiere: string;
-    heure_matiere: string;
-    id_matiere: number;
-    pochette_matiere: string;
-    nom_matiere: string;
-    description: string;
-    id_prof: string;
+  lessons_matiere: string;
+  heure_matiere: string;
+  id_matiere: number;
+  pochette_matiere: string;
+  nom_matiere: string;
+  description: string;
+  id_prof: string;
 }
 
 interface CoursMatiereListe {
-    id_matiere: number;
-    id_cours: number;
-    video_link: string;
-    video_share_link: string;
-    pochette_cours: string;
-    titre_cours: string;
-    sous_titre_cours: string;
-    description_cours: string;
-    date_publication_cours: string;
+  id_matiere: number;
+  id_cours: number;
+  video_link: string;
+  video_share_link: string;
+  pochette_cours: string;
+  titre_cours: string;
+  sous_titre_cours: string;
+  description_cours: string;
+  date_publication_cours: string;
+  duree_cours: string;
 }
 
-interface ProfDetails{
-    id_prof: number;
-    id_niveau: number;
-    id_matiere: number;
-    nom_prof: number;
+interface ProfDetails {
+  id_prof: number;
+  id_niveau: number;
+  id_matiere: number;
+  nom_prof: number;
 }
 
-interface NiveauEleve{
-    id_niveau: number;
-    nom_niveau: string;
-    pochette_niveau: string; 
+interface NiveauEleve {
+  id_niveau: number;
+  nom_niveau: string;
+  pochette_niveau: string;
 }
 
+const truncateText = (text: string, maxLength: number): string => {
+  if (!text) return "";
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+};
 
 const DetailsFormation: React.FC = () => {
-    const { id } = useParams<{ id: string }>(); // Récupère l'ID de l'URL
-    const [matiere, setMatiere] = useState<MatiereDetails | null>(null);
-    const [cours, setCours] = useState<CoursMatiereListe[]>([]);
-    const [niveau, setNiveau] = useState<NiveauEleve | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [prof, setProf] = useState<ProfDetails | null>(null);
-    const [user, setUser] = useState<any>(null);
-    const history = useHistory();
+  const { id } = useParams<{ id: string }>(); // Récupère l'ID de l'URL
+  const [matiere, setMatiere] = useState<MatiereDetails | null>(null);
+  const [cours, setCours] = useState<CoursMatiereListe[]>([]);
+  const [niveau, setNiveau] = useState<NiveauEleve | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [prof, setProf] = useState<ProfDetails | null>(null);
+  const [finessaie, setFinessaie] = useState<string>("");
 
-    useEffect(() => {
-        const userData = localStorage.getItem('user');
-        if (userData) {
-          setUser(JSON.parse(userData));
+  const history = useHistory();
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string>("");
+
+  // Utilisation du contexte d'authentification
+  const { user } = useAuth();
+
+  
+
+  useEffect(() => {
+    const fetchMatiereDetails = async () => {
+      try {
+        const response = await axios.get(
+          `https://hmproges.online/backendhmclassroom/details_api.php?id_matiere=${id}`
+        );
+        setMatiere(response.data);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des détails de la matière:",
+          error
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMatiereDetails();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchNiveauEleve = async () => {
+      if (user?.id_eleve && user.id_niveau) {
+        try {
+          const response = await axios.get(
+            `https://hmproges.online/backendhmclassroom/recup_niveau_eleve.php?id_niveau=${user?.id_niveau}`
+          );
+          //   console.log(user.id_niveau);
+          setNiveau(response.data);
+        } catch (error) {
+          console.error(
+            "Erreur lors de la récupération des détails de la matière:",
+            error
+          );
+        } finally {
+          setLoading(false);
         }
-      }, []);
+      } else {
+        // console.error("L'utilisateur ou l'id_niveau n'est pas défini.");
+      }
+    };
 
+    fetchNiveauEleve();
+  }, [user]);
 
-    useEffect(() => {
-        const fetchMatiereDetails = async () => {
-            try {
-                const response = await axios.get(`https://hmproges.online/backendhmclassroom/details_api.php?id_matiere=${id}`);
-                setMatiere(response.data);
-            } catch (error) {
-                console.error("Erreur lors de la récupération des détails de la matière:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchCours = async () => {
+      try {
+        const response = await axios.get(
+          `https://hmproges.online/backendhmclassroom/liste_cours_api.php?id_matiere=${id}`
+        );
+        setCours(response.data);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des détails de la matière:",
+          error
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        fetchMatiereDetails();
-    }, [id]);
+    fetchCours();
+  }, []);
 
-    useEffect(() => {
-        const fetchNiveauEleve = async () => {
-          if (user?.id_eleve && user.id_niveau) {
-            try {
-              const response = await axios.get(`https://hmproges.online/backendhmclassroom/recup_niveau_eleve.php?id_niveau=${user?.id_niveau}`);
-            //   console.log(user.id_niveau);
-              setNiveau(response.data);
-            } catch (error) {
-              console.error("Erreur lors de la récupération des détails de la matière:", error);
-            } finally {
-              setLoading(false);
-            }
-          } else {
-            // console.error("L'utilisateur ou l'id_niveau n'est pas défini.");
-          }
-        };
-    
-        fetchNiveauEleve();
-      }, [user]);
+  const handleGoBack = () => {
+    history.push("/Accueil");
+  };
 
-    useEffect(() => {
-        const fetchCours = async () => {
-            try {
-                const response = await axios.get(`https://hmproges.online/backendhmclassroom/liste_cours_api.php?id_matiere=${id}`);
-                setCours(response.data);
-            } catch (error) {
-                console.error("Erreur lors de la récupération des détails de la matière:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchProf = async () => {
+      if (!matiere?.id_prof) return;
 
-        fetchCours();
-    }, []);
+      try {
+        const response = await axios.get(
+          `https://hmproges.online/backendhmclassroom/details_prof_api.php?id_prof=${matiere?.id_prof}`
+        );
+        setProf(response.data);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des détails du professeur:",
+          error
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    const handleGoBack = () => {
-        history.goBack();
-      };
+    fetchProf();
+  }, [matiere?.id_prof]);
 
-      useEffect(() => {
-        const fetchProf = async () => {
-            if (!matiere?.id_prof) return; 
-    
-            try {
-                const response = await axios.get(`https://hmproges.online/backendhmclassroom/details_prof_api.php?id_prof=${matiere?.id_prof}`);
-                setProf(response.data);
-            } catch (error) {
-                console.error("Erreur lors de la récupération des détails du professeur:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-    
-        fetchProf();
-    }, [matiere?.id_prof]);
-    
+  const [searchText, setSearchText] = useState("");
 
-    return (
-        <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    <IonButton fill='clear' onClick={handleGoBack}>
-                        <IonIcon icon={chevronBack}></IonIcon>
-                    </IonButton>
-                </IonToolbar>
-            </IonHeader>
+  // Fonction pour gérer le changement de texte dans la barre de recherche
+  const handleSearchChange = (event: CustomEvent) => {
+    setSearchText(event.detail.value || "");
+  };
 
-            <IonContent>
-                {loading ? (
-                    <div className="spin-content">
-                        <IonSpinner name="crescent" />
-                    </div>
-                ) : (
-                    matiere && (
-                        <>
-                            <IonImg src={matiere.pochette_matiere} alt="" />
+  // Filtrer les cours en fonction du texte de recherche
+  const filteredCours =
+    Array.isArray(cours) ?
+      cours.filter((coursItem) =>
+        coursItem.titre_cours.toLowerCase().includes(searchText.toLowerCase())
+      )
+    : [];
 
-                            <div className="content-details-formation-detail">
-                                <section className="formation-niveau-prof">
-                                    <h3>{matiere.nom_matiere}</h3>
-                                    <h5>Votre niveau {niveau?.nom_niveau}</h5>
-                                    {prof && (
-                                        <p>Enseignant(e) : <b>{prof.nom_prof}</b></p>
-                                    )}
-                                </section>
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <div className="content-col">
+            <IonGrid>
+              <IonRow>
+                <IonCol size="auto">
+                  <IonButton fill="clear" onClick={handleGoBack}>
+                    <IonIcon icon={chevronBack}></IonIcon>
+                  </IonButton>
+                </IonCol>
+                <IonCol className="col-titre">
+                  <h3>{matiere?.nom_matiere}</h3>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </div>
+        </IonToolbar>
+      </IonHeader>
 
-                                <div className="lessons-duree">
-                                    <section>
-                                        <IonIcon icon={easel}></IonIcon>
-                                    <IonLabel>{matiere.lessons_matiere} Leçons</IonLabel>
-                                    </section>
-                                    <section>
-                                        <IonIcon icon={star}></IonIcon>
-                                        <IonLabel>4.7 (3.6k+)</IonLabel>
-                                    </section>
-                                    <section>
-                                        <IonIcon icon={time}></IonIcon>
-                                        <IonLabel>{matiere.heure_matiere} Heures</IonLabel>
-                                    </section>
-                                </div>
+      <IonContent>
+        {loading ?
+          <div className="spin-content">
+            <IonSpinner name="crescent" />
+          </div>
+        : matiere && (
+            <>
+              <IonImg src={matiere.pochette_matiere} alt="" />
 
-                                <div className="details-formation">
-                                    <p>{matiere.description}</p>
-                                    <h5>Cours à reviser :</h5>
-                                    <div className="search-content">
-                                    <IonSearchbar placeholder="Rechercher un cours"></IonSearchbar>
-                                    <IonButton><IonIcon src={search}></IonIcon></IonButton>
-                                    </div>
+              <div className="content-details-formation-detail">
+                <section className="formation-niveau-prof">
+                  <h5>Votre niveau {niveau?.nom_niveau}</h5>
+                  {prof && (
+                    <p>
+                      Enseignant(e) : <b>{prof.nom_prof}</b>
+                    </p>
+                  )}
+                </section>
 
-                                    <section className="list-lessons">
-                                    {cours.length > 0 ? (
-                                            cours.map((coursItem) => (
-                                                <a
-                                                    className="lessons-link"
-                                                    href={`/detailscours/${coursItem.id_cours}`} 
-                                                    key={coursItem.id_cours}
-                                                >
-                                                    <div className="content-svg-title-lessons">
-                                                        <img
-                                                            src={navigateCircle}
-                                                            className="svg-lessons"
-                                                        />
-                                                        <p>{coursItem.titre_cours}</p>
-                                                    </div>
-                                                    <img
-                                                        className="portrait-videos"
-                                                        src={coursItem.pochette_cours}
-                                                        alt={coursItem.titre_cours}
-                                                    />
-                                                </a>
-                                            ))
-                                        ) : (
-                                            <p>Aucun cours disponible pour cette matière.</p>
-                                        )}
-                                    </section>
-                                </div>
-                            </div>
-                        </>
-                    )
-                )}
-            </IonContent>
-        </IonPage>
-    );
+                <div className="details-formation">
+                  <p>{matiere.description}</p>
+                  <div className="search-content">
+                    <IonSearchbar
+                      placeholder="Rechercher un cours"
+                      value={searchText}
+                      onIonInput={(e) => handleSearchChange(e)} // Modification pour correspondre au typage
+                    ></IonSearchbar>
+                  </div>
+                  <h5>Cours à reviser :</h5>
+
+                  <section className="list-lessons">
+                    {filteredCours.length > 0 ?
+                      filteredCours.map((coursItem) => (
+                        <a
+                          className="lessons-link"
+                          href={`/detailscours/${coursItem.id_cours}`}
+                          key={coursItem.id_cours}>
+                          <IonRow>
+                            <IonCol size="auto">
+                              <div className="content-svg-title-lessons">
+                                <img
+                                  className="portrait-videos"
+                                  src={coursItem.pochette_cours}
+                                  alt={coursItem.titre_cours}
+                                />
+                              </div>
+                            </IonCol>
+                            <IonCol>
+                              <div className="content-duree-soustitre-titre">
+                                <h5>
+                                  {truncateText(
+                                    coursItem.titre_cours || "",
+                                    40
+                                  )}
+                                </h5>
+                                <p>{coursItem.duree_cours}</p>
+                              </div>
+                            </IonCol>
+                          </IonRow>
+                        </a>
+                      ))
+                    : <p>Cours en préparation.</p>}
+                  </section>
+                </div>
+              </div>
+            </>
+          )
+        }
+        <IonAlert
+          isOpen={showAlert}
+          onDidDismiss={() => setShowAlert(false)}
+          header={"Abonnement"}
+          message={alertMessage}
+          buttons={["OK"]}
+        />
+      </IonContent>
+    </IonPage>
+  );
 };
 
 export default DetailsFormation;

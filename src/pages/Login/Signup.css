@@ -24,13 +24,16 @@
   .input-signup-name,
   .input-signup-username,
   .input-signup-password,
-  /* .input-signup-confirm-password, */
+  .input-signup-confirm-password,
   .select-niveau-name {
     margin-bottom: 10px;
     border: solid 1px orange;
     border-radius: 5px;
-    padding: 0 20px;
     /* text-align: center; */
+  }
+
+  .select-niveau-name {
+    padding: 0 10px;
   }
 
   .text-titre{
@@ -87,3 +90,18 @@
     text-decoration: none;
     color: orange;
   }
+
+
+  .input-signup-name, .input-user-password{
+    margin-bottom: 20px;
+    border: solid 1px orange;
+    border-radius: 5px;
+}
+
+.input-signup-name input, .input-signup-username input, .input-signup-password input, .input-signup-confirm-password input{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    height: 50px;
+}

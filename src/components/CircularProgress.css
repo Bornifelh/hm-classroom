@@ -1,0 +1,108 @@
+.circular-progress {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-progress-svg {
+  transform: rotate(-90deg);
+}
+
+.circular-progress-bg {
+  fill: none;
+  stroke: #e0e0e0;
+  opacity: 0.3;
+}
+
+.circular-progress-bar {
+  fill: none;
+  stroke: url(#gradient);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.3s ease;
+  filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.6));
+}
+
+.circular-progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  user-select: none;
+}
+
+/* Gradient pour la barre de progression */
+.circular-progress-svg defs {
+  display: none;
+}
+
+.circular-progress-bar {
+  stroke: #ff69b4;
+  background: linear-gradient(45deg, #ff69b4, #8a2be2);
+}
+
+/* Animation d'apparition */
+.circular-progress {
+  animation: fadeInScale 0.3s ease-out;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Variantes de taille */
+.circular-progress.small {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.circular-progress.small .circular-progress-text {
+  font-size: 10px;
+}
+
+.circular-progress.large {
+  width: 80px !important;
+  height: 80px !important;
+}
+
+.circular-progress.large .circular-progress-text {
+  font-size: 18px;
+}
+
+/* État de téléchargement actif */
+.circular-progress.downloading .circular-progress-bar {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(255, 105, 180, 0.8));
+  }
+  100% {
+    filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.6));
+  }
+}
+
+/* État terminé */
+.circular-progress.completed .circular-progress-bar {
+  stroke: #4caf50;
+  filter: drop-shadow(0 0 8px rgba(76, 175, 80, 0.6));
+}
+
+.circular-progress.completed .circular-progress-text {
+  color: #4caf50;
+}

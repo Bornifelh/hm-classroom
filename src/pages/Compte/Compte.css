@@ -39,3 +39,16 @@
     color: orange;
     margin-left: 15px;
 }
+
+
+.content-name-number-maodal{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.content-name-number-maodal ion-button{
+    margin-top: 15px;
+}

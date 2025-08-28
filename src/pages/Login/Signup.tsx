@@ -46,36 +46,42 @@ const Signup: React.FC = () => {
   }
 
   const handleSignup = async () => {
-      // if (pass_eleve !== confirmPassword) {
-      //     setAlertMessage("Les mots de passe ne correspondent pas.");
-      //     setShowAlert(true);
-      //     return;
-      // }
-      setIsLoading(true);
-      try {
-          const response = await axios.post('https://hmproges.online/backendhmclassroom/user_signup.php', {
-              nom_eleve,
-              login_eleve,
-              pass_eleve,
-              infos_apareil,
-              date_souscription: dateSouscription,
-              fin_souscription: finSouscription,
-              id_niveau: selectedNiveau
-          });
-    
-          if (response.data.success) {
-              history.push('/success');
-          } else {
-              setAlertMessage(response.data.message);
-              setShowAlert(true);
-          }
-      } catch (error) {
-          setAlertMessage('Erreur de connexion. Veuillez réessayer.');
-          setShowAlert(true);
+    if (pass_eleve !== confirmPassword) {
+        setAlertMessage("Les mots de passe ne correspondent pas.");
+        setShowAlert(true);
+        return;
+    }
+
+    setIsLoading(true);
+
+    // Ajouter un délai avant d'effectuer la requête
+    setTimeout(async () => {
+        try {
+            const response = await axios.post('https://hmproges.online/backendhmclassroom/user_signup.php', {
+                nom_eleve,
+                login_eleve,
+                pass_eleve,
+                infos_apareil,
+                date_souscription: dateSouscription,
+                fin_souscription: finSouscription,
+                id_niveau: selectedNiveau
+            });
+
+            if (response.data.success) {
+                history.push('/success');
+            } else {
+                setAlertMessage(response.data.message);
+                setShowAlert(true);
+            }
+        } catch (error) {
+            setAlertMessage('Erreur de connexion. Veuillez réessayer.');
+            setShowAlert(true);
         } finally {
-          setIsLoading(false); // Arrêter le chargement
+            setIsLoading(false); // Arrêter le chargement
         }
-  };
+    }, 10000);
+};
+
 
   useEffect(() => {
       const fetchNiveau = async () => {
@@ -118,24 +124,21 @@ const Signup: React.FC = () => {
           
 
           <section className="input-signup-name">
-            <IonInput
+            <input
               // fill="outline"
-              label="Nom complet"
-              labelPlacement="floating"
               placeholder="Nom complet"
               value={nom_eleve}
-              onIonChange={(e) => setNomEleve(e.detail.value!)}
+              onChange={(e) => setNomEleve(e.target.value!)}
+
             />
           </section>
 
           <section className="input-signup-username">
-            <IonInput
-              // fill="outline"
-              label="Numéro de téléphone"
-              labelPlacement="floating"
-              placeholder="Nom d'utilisateur"
+            <input type="tel"
+              placeholder="Numéro de téléphone"
               value={login_eleve}
-              onIonChange={(e) => setLoginEleve(e.detail.value!)}
+              onChange={(e) => setLoginEleve(e.target.value!)}
+
             />
           </section>
 
@@ -156,28 +159,25 @@ const Signup: React.FC = () => {
             </IonSelect>
           </section>
           <section className="input-signup-password">
-            <IonInput
+            <input
               // fill="outline"
               type="password"
-              label="Mot de passe"
-              labelPlacement="floating"
               placeholder="Mot de passe"
               value={pass_eleve}
-              onIonChange={(e) => setPassword(e.detail.value!)}
+              onChange={(e) => setPassword(e.target.value!)}
             />
           </section>
 
-          {/* <section className="input-signup-confirm-password">
-            <IonInput
-              fill="outline"
+          <section className="input-signup-confirm-password">
+            <input
+              // fill="outline"
               type="password"
-              label="Confirmer mot de passe"
-              labelPlacement="floating"
               placeholder="Confirmer mot de passe"
               value={confirmPassword}
-              onIonChange={(e) => setConfirmPassword(e.detail.value!)}
+              onChange={(e) => setConfirmPassword(e.target.value!)}
+
             />
-          </section> */}
+          </section>
 
           <section className="btn-user-signup">
             <IonButton fill="outline" onClick={handleSignup}>

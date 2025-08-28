@@ -12,6 +12,9 @@ import {
   IonButton,
   IonIcon,
   IonFab,
+  IonCol,
+  IonGrid,
+  IonRow,
 } from "@ionic/react";
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router";
@@ -120,9 +123,28 @@ const Quizz: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar className="toolbar-content">
-          <IonButton fill="clear" onClick={handleGoBack}>
-            <IonIcon icon={chevronBack}></IonIcon>
-          </IonButton>
+          <IonGrid className="ion-padding">
+            <IonRow>
+              <IonCol >
+              <IonButton fill="clear" onClick={handleGoBack}>
+                <IonIcon icon={chevronBack}></IonIcon>
+              </IonButton>
+              </IonCol>
+              <IonCol size="auto">
+              <IonButton fill="clear"
+                  id="validateQuizz"
+                  disabled={Object.keys(selectedAnswers).length !== quizData.length} // Désactiver si toutes les réponses ne sont pas sélectionnées
+                  onClick={handlerValideQuizz}
+                  
+                >
+                  Valider
+            </IonButton>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+          
+
+          
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
@@ -156,16 +178,7 @@ const Quizz: React.FC = () => {
         )}
 
         <div className="content-button-float">
-          <IonFab horizontal="center" vertical="bottom" slot="fixed">
-            <IonButton
-              id="validateQuizz"
-              disabled={Object.keys(selectedAnswers).length !== quizData.length} // Désactiver si toutes les réponses ne sont pas sélectionnées
-              onClick={handlerValideQuizz}
-              expand="full"
-            >
-              Valider
-            </IonButton>
-          </IonFab>
+            
         </div>
       </IonContent>
     </IonPage>

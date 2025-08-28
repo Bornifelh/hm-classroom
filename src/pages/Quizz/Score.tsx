@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import "./scrore.css";
-import { colorWand, repeat, returnUpBack } from "ionicons/icons";
+import { colorWand, repeat, returnUpBack, checkmarkCircle, closeCircle } from "ionicons/icons"; // Importer les icônes
 
 interface ReponseQuizz {
   id_qcm: string;
@@ -32,7 +32,6 @@ const Score: React.FC = () => {
     }
   }, []);
   
-
   // Deuxième useEffect pour récupérer les données du quiz
   useEffect(() => {
     // Si les données utilisateur ne sont pas encore chargées, ne pas exécuter la requête API
@@ -71,10 +70,9 @@ const Score: React.FC = () => {
   
     fetchQuizData();
   }, [id, user]); // Exécuter lorsque l'id du cours ou les données utilisateur changent
-   // Ajouter user.id_eleve comme dépendance
 
-const handleGoBack = () => {
-    history.goBack();
+  const handleGoBack = () => {
+    history.push(`/detailscours/${id}`);
   };
 
   return (
@@ -88,9 +86,15 @@ const handleGoBack = () => {
               quizData.map((question, index) => (
                 <div key={index} className="content-resultat">
                   <p><b>Question :</b> <span>{question.question_qcm}</span></p>
-                  <p>Réponse utilisateur : {question.choice_reponse}</p>
+                  <p>Votre Réponse : {question.choice_reponse}</p>
                   <p>Réponse correcte : {question.reponse_qcm}</p>
-                  <p>Etat : <span>{question.statut}</span></p>
+                  <p>
+                    {question.statut === "Réussi" ? (
+                      <IonIcon src={checkmarkCircle} color="success" style={{ fontSize: '50px' }} /> // Icône verte pour réussi
+                    ) : (
+                      <IonIcon src={closeCircle} color="danger" style={{ fontSize: '50px'}}/> // Icône rouge pour échec
+                    )}
+                  </p>
                 </div>
               ))
             ) : (
@@ -98,24 +102,20 @@ const handleGoBack = () => {
             )}
           </div>
         )}
-        {/* <section className="btns-content">
-            <IonButton expand="full">Retour</IonButton>
-            <IonButton expand="full">Recommencer</IonButton>
-        </section> */}
-
+        
         <IonFab slot="fixed" horizontal="start" vertical="bottom">
-      <IonFabButton >
-        <IonIcon icon={colorWand}></IonIcon>
-      </IonFabButton>
-      <IonFabList side="end">
-        <IonFabButton onClick={handleGoBack}>
-          <IonIcon icon={returnUpBack}></IonIcon>
-        </IonFabButton>
-        <IonFabButton>
-          <IonIcon icon={repeat}></IonIcon>
-        </IonFabButton>
-      </IonFabList>
-    </IonFab>
+          <IonFabButton>
+            <IonIcon icon={colorWand}></IonIcon>
+          </IonFabButton>
+          <IonFabList side="end">
+            <IonFabButton onClick={handleGoBack}>
+              <IonIcon icon={returnUpBack}></IonIcon>
+            </IonFabButton>
+            {/* <IonFabButton>
+              <IonIcon icon={repeat}></IonIcon>
+            </IonFabButton> */}
+          </IonFabList>
+        </IonFab>
       </IonContent>
     </IonPage>
   );

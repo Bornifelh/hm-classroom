@@ -1,23 +1,15 @@
 import { IonButton, IonCol, IonContent, IonHeader, IonIcon, IonPage, IonRow, IonSearchbar, IonTitle, IonToolbar } from "@ionic/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import AccueilComponment from "./AccueilComponment";
+import { useAuth } from '../../contexts/AuthContext';
 
 
-const Accueil : React.FC = () => {
-    const [user, setUser] = useState<any>(null);  // useState utilisé correctement ici
-
-  useEffect(() => {
-    const userData = localStorage.getItem('user'); // Récupération des données utilisateur
-    if (!userData) {
-      window.location.href = '/Login'; // Redirection si l'utilisateur n'est pas trouvé
-    } else {
-      setUser(JSON.parse(userData)); // Stockage des données utilisateur dans le state
-    }
-  }, []);
+const Accueil: React.FC = () => {
+    const { user } = useAuth();
+    
     return(
         <IonPage>
-            {/* <Header/> */}
-            <IonContent  fullscreen className="ion-padding">
+            <IonContent fullscreen className="ion-padding">
                 <AccueilComponment/>
             </IonContent>
         </IonPage>
